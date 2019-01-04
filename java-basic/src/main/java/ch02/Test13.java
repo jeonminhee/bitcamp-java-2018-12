@@ -34,7 +34,7 @@ public class Test13 {
     System.out.printf("%1$tH %1$tI\n", today);
 
     //M : 날짜 및 시각 데이터에서 분을 추출하여 분을 표현
-    System.out.printf("%1$tM\n", today);
+    System.out.printf("%tM\n", today);
 
     //S : 날짜 및 시각 데이터에서 시각을 추출하여 초을 표현
     //L : 날짜 및 시각 데이터에서 시각을 추출하여 밀리초을 표현
