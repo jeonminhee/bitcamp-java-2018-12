@@ -7,17 +7,41 @@ import java.util.Scanner;
 public class App2 {
     
     public static void main(String[] args) {
-     Scanner scanner = new Scanner(System.in);
-     System.out.println("암호를 입력하세요");
-     int num = scanner.nextInt();
-     
-     
-        System.out.println("번호 : 1");
-        System.out.println("이름 : 홍길동");
-        System.out.println("이메일 : hong@test.com");
-        System.out.println("암호 : " + num);
-        System.out.println("사진 : hong.png");
-        System.out.println("전화 : 1111-2222");
-        System.out.println("가입일 : 2019-01-01");
+
+      Scanner sc = new Scanner(System.in);
+
+      System.out.print("번호? ");
+      int num = sc.nextInt();
+
+      sc.nextLine();
+
+      System.out.print("이름? ");
+      String name = sc.nextLine();
+
+      System.out.print("이메일? ");
+      String email = sc.nextLine();
+
+      System.out.print("암호? ");
+      String pwd = sc.nextLine();
+
+      System.out.print("사진? ");
+      String photo = sc.nextLine();
+
+      System.out.print("전화? ");
+      String phone = sc.nextLine();
+
+      System.out.print("가입일? ");
+      String join_date = sc.nextLine();
+
+
+
+      System.out.printf("번호 : %d\n", num);
+      System.out.printf("이름 : %s\n", name);
+      System.out.printf("이메일 : %s\n", email);
+      System.out.printf("암호 : %s\n", pwd);
+      System.out.printf("사진 : %s\n", photo);
+      System.out.printf("전화 : %s\n", phone);
+      System.out.printf("가입일 : %s\n", join_date);
+      
     }
 }
