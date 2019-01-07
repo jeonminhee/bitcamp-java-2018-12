@@ -29,7 +29,8 @@ public class App2 {
       System.out.print("전화? ");
       String phone = sc.nextLine();
 
-
+      // Date registeredDate = new Date(System.currentTimeMillis());
+      // 1970년 기준으로 현재 날짜, 시간을 가져옴
 
       System.out.printf("번호 : %d\n", num);
       System.out.printf("이름 : %s\n", name);

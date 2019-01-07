@@ -6,13 +6,14 @@ import java.util.*;
 public class App {
 
   public static void main(String[] args) {
-
+    
+    //키보드 입력 스트림(System.in)을 스캐너 객체에 연결한다.
+    
+    
     Scanner sc = new Scanner(System.in);
 
     System.out.print("번호? ");
-    int num = sc.nextInt();
-
-    sc.nextLine();
+    int num = Integer.parseInt(sc.nextLine());
 
     System.out.print("수업명? ");
     String title = sc.nextLine();
@@ -22,7 +23,9 @@ public class App {
 
     System.out.print("시작일? ");
     String start_date = sc.nextLine();
-
+    // Date start_date = Date.valueOf(sc.nextLine());
+    // Date.valueOf로 값을 받아 Date안에 날짜데이터를 넣는다.
+    
     System.out.print("종료일? ");
     String end_date = sc.nextLine();
 
@@ -32,7 +35,8 @@ public class App {
     System.out.print("일수업시간? ");
     String day_time = sc.nextLine();
 
-
+    sc.close();
+     // 사용 후 스캐너 객체의 자원을 해제한다.
 
     System.out.printf("번호 : %d\n", num);
     System.out.printf("수업명 : %s\n", title);
