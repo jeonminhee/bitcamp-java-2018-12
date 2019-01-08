@@ -6,46 +6,57 @@ import java.util.*;
 public class App {
 
   public static void main(String[] args) {
-    
-    //키보드 입력 스트림(System.in)을 스캐너 객체에 연결한다.
-    
-    
+    int[] num = new int[100];
+    String[] title = new String[100];
+    String[] start_date = new String[100];
+    String[] end_date = new String[100];
+    String[] full_time = new String[100];
+
     Scanner sc = new Scanner(System.in);
 
-    System.out.print("번호? ");
-    int num = Integer.parseInt(sc.nextLine());
+    int i = 0;
 
-    System.out.print("수업명? ");
-    String title = sc.nextLine();
+    while(true) {
 
-    System.out.print("수업내용? ");
-    String study = sc.nextLine();
+      System.out.print("번호? ");
+      num[i] = Integer.parseInt(sc.nextLine());
 
-    System.out.print("시작일? ");
-    String start_date = sc.nextLine();
-    // Date start_date = Date.valueOf(sc.nextLine());
-    // Date.valueOf로 값을 받아 Date안에 날짜데이터를 넣는다.
-    
-    System.out.print("종료일? ");
-    String end_date = sc.nextLine();
+      System.out.print("수업명? ");
+      title[i] = sc.nextLine();
 
-    System.out.print("총수업시간? ");
-    String full_time = sc.nextLine();
+      System.out.print("수업내용? ");
+      String study = sc.nextLine();
 
-    System.out.print("일수업시간? ");
-    String day_time = sc.nextLine();
+      System.out.print("시작일? ");
+      start_date[i] = sc.nextLine();
 
-    sc.close();
-     // 사용 후 스캐너 객체의 자원을 해제한다.
+      System.out.print("종료일? ");
+      end_date[i] = sc.nextLine();
 
-    System.out.printf("번호 : %d\n", num);
-    System.out.printf("수업명 : %s\n", title);
-    System.out.printf("수업내용 : %s\n", study);
-    System.out.printf("시작일 : %s\n", start_date);
-    System.out.printf("종료일 : %s\n", end_date);
-    System.out.printf("총수업시간 : %s\n", full_time);
-    System.out.printf("일수업시간 : %s\n", day_time);
+      System.out.print("총수업시간? ");
+      full_time[i] = sc.nextLine();
 
+      System.out.print("일수업시간? ");
+      String day_time = sc.nextLine();
+
+      System.out.print("계속 하시겠습니까?(Y/n)");
+      String str = sc.nextLine();
+      i++;
+      if(str.equalsIgnoreCase("y") ||str.equalsIgnoreCase("")) {
+        continue;
+      }
+      if (!str.equalsIgnoreCase("y") || !str.equalsIgnoreCase("")) {
+
+        int j;
+
+        for(j = 0 ; j < i ; j++ ) {
+          System.out.printf("%d, %s, %s ~ %s, %s\n", 
+              num[j], title[j], start_date[j], end_date[j], full_time[j]);
+        } break;
+
+      }
+
+    }
 
   }
 }
