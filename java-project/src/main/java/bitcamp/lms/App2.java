@@ -9,17 +9,20 @@ public class App2 {
 
   public static void main(String[] args) {
     
-    int[] num = new int[100];
-    String[] name = new String[100];
-    String[] email = new String[100];
-    String[] phone = new String[100];
-    Date[] today = new Date[100];
-    
-    Scanner sc = new Scanner(System.in);
-    
+
+    int no = 10;
     int i = 0;
 
-    while(true) {
+    int[] num = new int[no];
+    String[] name = new String[no];
+    String[] email = new String[no];
+    String[] phone = new String[no];
+    Date[] today = new Date[no];
+
+    Scanner sc = new Scanner(System.in);
+
+
+    while(i <= 10) {
 
       System.out.print("번호? ");
       num[i] = Integer.parseInt(sc.nextLine());
@@ -39,23 +42,32 @@ public class App2 {
       System.out.print("전화? ");
       phone[i] = sc.nextLine();
 
-      System.out.print("계속 하시겠습니까?(Y/n)");
-      String str = sc.nextLine();
-      
-      today[i] = new Date(System.currentTimeMillis());
-      
+      System.out.print("가입일? ");
+      today[i] = Date.valueOf(sc.nextLine());
+
       i++;
-      
-      if(str.equalsIgnoreCase("y") ||str.equalsIgnoreCase("")) {
+
+      System.out.println();
+      System.out.print("계속 입력하시겠습니까?(Y/n) ");
+      String str = sc.nextLine();
+
+      if (str.equalsIgnoreCase("y") || str.equals("")) {
+
         continue;
-      }
-      if (!str.equalsIgnoreCase("y") || !str.equalsIgnoreCase("")) {
-        int j;
-        for(j = 0 ; j < i ; j++ ) {
-          System.out.printf("%d, %s, %s, %s, %s\n", num[j], name[j], email[j], phone[j], today[j]);
-        } break;
+      } if (!str.equalsIgnoreCase("y") && !str.equals("")) {
+        break;
       }
 
     }
+    sc.close();
+    System.out.println();
+    
+    int a;
+    for(a = 0; a < i; a++) {
+      System.out.printf("%d, %4s, %-10s, %-12s, %s\n",
+          num[a], name[a], email[a], phone[a], today[a]);
+    }
+
   }
+
 }

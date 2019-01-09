@@ -3,20 +3,27 @@
  */
 package bitcamp.lms;
 import java.util.*;
+import java.sql.Date;
+
 public class App {
 
   public static void main(String[] args) {
-    int[] num = new int[100];
-    String[] title = new String[100];
-    String[] start_date = new String[100];
-    String[] end_date = new String[100];
-    String[] full_time = new String[100];
+    
+    int k = 10;
+    int i = 0;
+
+
+    int[] num = new int[k];   
+    String[] title = new String[k];
+    String[] study = new String[k];
+    Date[] start_date = new Date[k];
+    Date[] end_date = new Date[k];
+    String[] full_time = new String[k];
+    String[] day_time = new String[k];
 
     Scanner sc = new Scanner(System.in);
 
-    int i = 0;
-
-    while(true) {
+    while(i <= 10) {
 
       System.out.print("번호? ");
       num[i] = Integer.parseInt(sc.nextLine());
@@ -25,38 +32,44 @@ public class App {
       title[i] = sc.nextLine();
 
       System.out.print("수업내용? ");
-      String study = sc.nextLine();
+      study[i] = sc.nextLine();
 
       System.out.print("시작일? ");
-      start_date[i] = sc.nextLine();
+      start_date[i] = Date.valueOf(sc.nextLine());
 
       System.out.print("종료일? ");
-      end_date[i] = sc.nextLine();
+      end_date[i] = Date.valueOf(sc.nextLine());
 
       System.out.print("총수업시간? ");
       full_time[i] = sc.nextLine();
 
       System.out.print("일수업시간? ");
-      String day_time = sc.nextLine();
+      day_time[i] = sc.nextLine();
 
-      System.out.print("계속 하시겠습니까?(Y/n)");
-      String str = sc.nextLine();
       i++;
-      if(str.equalsIgnoreCase("y") ||str.equalsIgnoreCase("")) {
+
+      System.out.println();
+      System.out.print("계속 입력하시겠습니까?(Y/n) ");
+      String str = sc.nextLine();
+
+      if (str.equalsIgnoreCase("y") || str.equals("")) {
+        System.out.println();
         continue;
-      }
-      if (!str.equalsIgnoreCase("y") || !str.equalsIgnoreCase("")) {
-
-        int j;
-
-        for(j = 0 ; j < i ; j++ ) {
-          System.out.printf("%d, %s, %s ~ %s, %s\n", 
-              num[j], title[j], start_date[j], end_date[j], full_time[j]);
-        } break;
-
+      } if(!str.equalsIgnoreCase("y") && !str.equals("")) {
+        break;
       }
 
     }
+    sc.close();
+    System.out.println();
+
+    int a;
+    for(a = 0; a < i; a++) {
+      System.out.printf("%d, %-15s, %s ~ %s, %10s\n", 
+          num[a], title[a], start_date[a], end_date[a], full_time[a]);
+    }
+
 
   }
+
 }
