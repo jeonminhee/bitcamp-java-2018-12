@@ -1,56 +1,31 @@
 package ch01;
 
-import java.sql.Date;
-import java.util.Scanner;
-
 public class Exx {
 
+  static class Score {
+    String name;
+    int math;
+    int eng;
+    int kor;
+    int sum;
+    float aver;
+  }
+  
+  static void printScore(Score s) {
+    s.sum = s.math + s.eng + s.kor;
+    s.aver = s.sum / 3f;
+    System.out.printf("이름 : %s, 영어 : %d, 수학 : %d, 국어 : %d, 총점 : %d, 평균 : %f\n", 
+        s.name, s.eng, s.math, s.kor, s.sum, s.aver);
+  }
   public static void main(String[] args) {
 
-    int no = 10;
-    int i = 0;
+    Score s1 = new Score();
+    s1.math = 100;
+    s1.eng = 50;
+    s1.kor = 40;
+    s1.name = "전민희";
 
-    int[] num = new int[no];
-    String[] a = new String[no];
-    Date[] today = new Date[no];
-    int[] view = new int[no];
-
-
-    Scanner sc = new Scanner(System.in);
-
-    while(i <= 10) {
-      System.out.print("번호 ? ");
-      num[i] = Integer.parseInt(sc.nextLine());
-
-      System.out.print("내용 ? ");
-      a[i] = sc.nextLine();   
-
-      today[i] = new Date(System.currentTimeMillis());
-
-      view[i] = 0;
-
-      i++;
-
-      System.out.println();
-      
-      System.out.print("계속 입력하시겠습니까?(Y/n) ");
-      String str = sc.nextLine();
-      
-      System.out.println();
-
-      if(str.equalsIgnoreCase("y") || str.equals("")) {
-        continue;
-      } if(!str.equalsIgnoreCase("y") && !str.equals("")) {
-        break;
-      }
-    }
-    sc.close();
-
-    int j;
-    for(j = 0; j < i; j++) {
-      System.out.printf("%d, %-15s, %s, %d\n", 
-          num[j], a[j], today[j], view[j]);
-    }
+    printScore(s1);
     
   }
 }

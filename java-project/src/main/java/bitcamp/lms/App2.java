@@ -6,32 +6,27 @@ import java.util.Scanner;
 import java.sql.Date;
 
 public class App2 {
-
+  
   public static void main(String[] args) {
     
-
-    int no = 10;
     int i = 0;
-
-    int[] num = new int[no];
-    String[] name = new String[no];
-    String[] email = new String[no];
-    String[] phone = new String[no];
-    Date[] today = new Date[no];
+    final int j = 50;
+    Member[] m1 = new Member[j];
 
     Scanner sc = new Scanner(System.in);
+    
+    while(i < j) {
 
-
-    while(i <= 10) {
-
+      Member m2 = new Member();
+      
       System.out.print("번호? ");
-      num[i] = Integer.parseInt(sc.nextLine());
+      m2.num = Integer.parseInt(sc.nextLine());
 
       System.out.print("이름? ");
-      name[i] = sc.nextLine();
+      m2.name = sc.nextLine();
 
       System.out.print("이메일? ");
-      email[i] = sc.nextLine();
+      m2.email = sc.nextLine();
 
       System.out.print("암호? ");
       String pwd = sc.nextLine();
@@ -40,10 +35,12 @@ public class App2 {
       String photo = sc.nextLine();
 
       System.out.print("전화? ");
-      phone[i] = sc.nextLine();
+      m2.phone = sc.nextLine();
 
       System.out.print("가입일? ");
-      today[i] = Date.valueOf(sc.nextLine());
+      m2.today = Date.valueOf(sc.nextLine());
+      
+      m1[i] = m2;
 
       i++;
 
@@ -65,7 +62,7 @@ public class App2 {
     int a;
     for(a = 0; a < i; a++) {
       System.out.printf("%d, %4s, %-10s, %-12s, %s\n",
-          num[a], name[a], email[a], phone[a], today[a]);
+          m1[a].num, m1[a].name, m1[a].email, m1[a].phone, m1[a].today);
     }
 
   }

@@ -9,27 +9,27 @@ public class App3 {
 
   public static void main(String[] args) {
 
-    int no = 10;
     int i = 0;
-
-    int[] num = new int[no];
-    String[] a = new String[no];
-    Date[] today = new Date[no];
-    int[] view = new int[no];
-
+    final int length = 50;
+    Board[] b1 = new Board[length];
 
     Scanner sc = new Scanner(System.in);
 
-    while(i <= 10) {
+    while(i < length) {
+      
+      Board b2 = new Board();
+      
       System.out.print("번호 ? ");
-      num[i] = Integer.parseInt(sc.nextLine());
+      b2.num = Integer.parseInt(sc.nextLine());
 
       System.out.print("내용 ? ");
-      a[i] = sc.nextLine();   
+      b2.a = sc.nextLine();   
 
-      today[i] = new Date(System.currentTimeMillis());
+      b2.today = new Date(System.currentTimeMillis());
 
-      view[i] = 0;
+      b2.view = 0;
+      
+      b1[i] = b2;
 
       i++;
 
@@ -51,7 +51,7 @@ public class App3 {
     int j;
     for(j = 0; j < i; j++) {
       System.out.printf("%d, %-15s, %s, %d\n", 
-          num[j], a[j], today[j], view[j]);
+          b1[j].num, b1[j].a, b1[j].today, b1[j].view);
     }
     
   }

@@ -5,46 +5,41 @@ package bitcamp.lms;
 import java.util.*;
 import java.sql.Date;
 
+
 public class App {
 
   public static void main(String[] args) {
-    
-    int k = 10;
+
     int i = 0;
-
-
-    int[] num = new int[k];   
-    String[] title = new String[k];
-    String[] study = new String[k];
-    Date[] start_date = new Date[k];
-    Date[] end_date = new Date[k];
-    String[] full_time = new String[k];
-    String[] day_time = new String[k];
+    final int a = 50;
+    Lesson[] l1 = new Lesson[a];
 
     Scanner sc = new Scanner(System.in);
 
-    while(i <= 10) {
+    while(i < a) {
+      Lesson l2 = new Lesson();
 
       System.out.print("번호? ");
-      num[i] = Integer.parseInt(sc.nextLine());
+      l2.num = Integer.parseInt(sc.nextLine());
 
       System.out.print("수업명? ");
-      title[i] = sc.nextLine();
+      l2.title = sc.nextLine();
 
       System.out.print("수업내용? ");
-      study[i] = sc.nextLine();
+      l2.study = sc.nextLine();
 
       System.out.print("시작일? ");
-      start_date[i] = Date.valueOf(sc.nextLine());
+      l2.start_date = Date.valueOf(sc.nextLine());
 
       System.out.print("종료일? ");
-      end_date[i] = Date.valueOf(sc.nextLine());
+      l2.end_date = Date.valueOf(sc.nextLine());
 
       System.out.print("총수업시간? ");
-      full_time[i] = sc.nextLine();
+      l2.full_time = sc.nextLine();
 
       System.out.print("일수업시간? ");
-      day_time[i] = sc.nextLine();
+      l2.day_time = sc.nextLine();
+      l1[i] = l2;
 
       i++;
 
@@ -63,13 +58,11 @@ public class App {
     sc.close();
     System.out.println();
 
-    int a;
-    for(a = 0; a < i; a++) {
+    int j;
+    for(j = 0; j < i; j++) {
       System.out.printf("%d, %-15s, %s ~ %s, %10s\n", 
-          num[a], title[a], start_date[a], end_date[a], full_time[a]);
+          l1[j].num, l1[j].title, l1[j].start_date, l1[j].end_date, l1[j].full_time);
     }
 
-
   }
-
 }
