@@ -1,13 +1,13 @@
 package bitcamp.lms;
 import java.util.*;
-import bitcamp.lms.handler.*;
+import bitcamp.lms.handler.BoardHandler;
+import bitcamp.lms.handler.LessonHandler;
+import bitcamp.lms.handler.MemberHandler;
 import java.sql.Date;
 
 
 public class App {
 
-  public static final int LENGTH = 10;
-  
   public static String prompt () {
     Scanner sc = new Scanner(System.in);
     String str = sc.nextLine();

@@ -2,11 +2,12 @@ package bitcamp.lms;
 
 import java.sql.Date;
 
-public class Board {
-  
+class Member {
+
   int num;
-  String a;
+  String name;
+  String email;
+  String phone;
   Date today;
-  int view;
   
 }

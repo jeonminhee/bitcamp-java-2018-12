@@ -2,7 +2,7 @@ package bitcamp.lms;
 
 import java.sql.Date;
 
-public class Member {
+class Member {
 
   int num;
   String name;
