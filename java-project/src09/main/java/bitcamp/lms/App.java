@@ -15,7 +15,7 @@ public class App {
   static Board[] b1 = new Board[LENGTH];
 
 
-  static String prompt () {
+  public static String prompt () {
 
     Scanner sc = new Scanner(System.in);
     String str = sc.nextLine();
