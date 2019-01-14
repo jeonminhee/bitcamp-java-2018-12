@@ -17,6 +17,7 @@ public class App {
     
     BoardHandler b1 = new BoardHandler();
     b1.keyboard = keyboard;
+    
     BoardHandler b2 = new BoardHandler();
     b2.keyboard = keyboard;
     
