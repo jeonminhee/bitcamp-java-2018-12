@@ -4,25 +4,21 @@ import java.sql.Date;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
 
-public class BoardHandler {
+public class BoardHandler2 {
   
-  public BoardHandler(Scanner keyboard) {
-    this.keyboard = keyboard;
-  }
-  
-  public Scanner keyboard;
-  final int LENGTH = 10;
-  Board[] boards = new Board[LENGTH];
-  int boardIdx = 0;
+  public static Scanner keyboard;
+  static final int LENGTH = 10;
+  static Board[] boards = new Board[LENGTH];
+  static int boardIdx = 0;
 
-  public void listBoard() {
+  public static void listBoard() {
     for (int j = 0; j < boardIdx; j++) {
       System.out.printf("%3d, %-20s, %s, %d\n", 
           boards[j].no, boards[j].contents, boards[j].createdDate, boards[j].viewCount);
     }
   }
 
-  public void addBoard() {
+  public static void addBoard() {
     Board board = new Board();
     
     System.out.print("번호? ");

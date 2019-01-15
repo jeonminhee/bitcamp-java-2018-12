@@ -1,7 +1,10 @@
 package com.eomcs.lms;
 
 import java.util.Scanner;
-import com.eomcs.lms.handler.*;
+import com.eomcs.lms.handler.BoardHandler;
+import com.eomcs.lms.handler.BoardHandler2;
+import com.eomcs.lms.handler.LessonHandler;
+import com.eomcs.lms.handler.MemberHandler;
 
 public class App {
 
@@ -9,43 +12,38 @@ public class App {
 
   public static void main(String[] args) {
     
-    BoardHandler Board1 = new BoardHandler(keyboard);
-    
-    BoardHandler Board2 = new BoardHandler(keyboard);
-    
-    LessonHandler Lesson1 = new LessonHandler(keyboard);
-
-    MemberHandler Member1 = new MemberHandler(keyboard);
- 
-    
-    
+    // 외부로 분리한 클래스에서 사용할 keyboard를 주입한다.
+    LessonHandler.keyboard = keyboard;
+    MemberHandler.keyboard = keyboard;
+    BoardHandler.keyboard = keyboard;
+    BoardHandler2.keyboard = keyboard;
     
     while (true) {
       String command = prompt();
 
       if (command.equals("/lesson/add")) {
-        Lesson1.addLesson();
+        LessonHandler.addLesson();
         
       } else if (command.equals("/lesson/list")) {
-        Lesson1.listLesson();
+        LessonHandler.listLesson();
       
       } else if (command.equals("/member/add")) {
-        Member1.addMember();
+        MemberHandler.addMember();
         
       } else if (command.equals("/member/list")) {
-        Member1.listMember();
+        MemberHandler.listMember();
         
       } else if (command.equals("/board/add")) {
-        Board1.addBoard();
+        BoardHandler.addBoard();
         
       } else if (command.equals("/board/list")) {
-        Board1.listBoard();
+        BoardHandler.listBoard();
         
       } else if (command.equals("/board2/add")) {
-        Board2.addBoard();
+        BoardHandler2.addBoard();
         
       } else if (command.equals("/board2/list")) {
-        Board2.listBoard();
+        BoardHandler2.listBoard();
         
       } else if (command.equals("quit")) {
         System.out.println("안녕!");

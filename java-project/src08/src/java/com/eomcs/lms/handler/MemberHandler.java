@@ -6,16 +6,12 @@ import com.eomcs.lms.domain.Member;
 
 public class MemberHandler {
   
-  public MemberHandler(Scanner keyboard) {
-    this.keyboard = keyboard;
-  }
+  public static Scanner keyboard;
+  static final int LENGTH = 10;
+  static Member[] members = new Member[LENGTH];
+  static int memberIdx = 0;
   
-  public Scanner keyboard;
-  final int LENGTH = 10;
-  Member[] members = new Member[LENGTH];
-  int memberIdx = 0;
-  
-  public void listMember() {
+  public static void listMember() {
     for (int j = 0; j < memberIdx; j++) {
       System.out.printf("%3d, %-4s, %-20s, %-15s, %s\n", 
           members[j].no, members[j].name, members[j].email, 
@@ -23,7 +19,7 @@ public class MemberHandler {
     }
   }
 
-  public void addMember() {
+  public static void addMember() {
     Member member = new Member();
     
     System.out.print("번호? ");
