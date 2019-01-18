@@ -6,20 +6,21 @@ import com.eomcs.lms.domain.Board;
 
 public class BoardHandler {
   
+  Scanner keyboard;
+  ArrayList <Board> list;
+  
   public BoardHandler(Scanner keyboard) {
     this.keyboard = keyboard;
+    this.list = new ArrayList<>();
   }
-  
-  static final int LENGTH = 10;
-  
-  Scanner keyboard;
-  Board[] boards = new Board[LENGTH];
-  int boardIdx = 0;
-
+ 
   public void listBoard() {
-    for (int j = 0; j < boardIdx; j++) {
+    Board[] boards = list.toArrays(new Board[0]);
+
+    for (Board board : boards) {
       System.out.printf("%3d, %-20s, %s, %d\n", 
-          boards[j].getNo(), boards[j].getContents(), boards[j].getCreatedDate(), boards[j].getViewCount());
+          board.getNo(), board.getContents(), 
+          board.getCreatedDate(), board.getViewCount());
     }
   }
 
@@ -36,8 +37,7 @@ public class BoardHandler {
     
     board.setViewCount(0);
     
-    boards[boardIdx] = board;
-    boardIdx++;
+    list.add(board);
     
     System.out.println("저장하였습니다.");
   }
