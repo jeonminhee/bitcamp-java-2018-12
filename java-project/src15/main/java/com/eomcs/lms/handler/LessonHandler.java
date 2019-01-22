@@ -1,4 +1,5 @@
 package com.eomcs.lms.handler;
+
 import java.sql.Date;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Lesson;
@@ -11,19 +12,20 @@ public class LessonHandler {
 
   public LessonHandler(Scanner keyboard) {
     this.keyboard = keyboard;
-    this.list = new ArrayList<>(20);
+    this.list = new ArrayList<>();
   }
 
   public void listLesson() {
-    Lesson[] lessons = list.toArray(new Lesson[] {});
+    Lesson[] lessons = list.toArrays(new Lesson[0]);
     for (Lesson lesson : lessons) {
       System.out.printf("%3d, %-15s, %10s ~ %10s, %4d\n", 
-          lesson.getNo(), lesson.getTitle(), 
-          lesson.getStartDate(), lesson.getEndDate(), lesson.getTotalHours());
+          lesson.getNo(), lesson.getTitle(), lesson.getStartDate(), 
+          lesson.getEndDate(), lesson.getTotalHours());
     }
   }
 
   public void addLesson() {
+
     Lesson lesson = new Lesson();
 
     System.out.print("번호? ");
@@ -47,41 +49,63 @@ public class LessonHandler {
     System.out.print("일수업시간? ");
     lesson.setDayHours(Integer.parseInt(keyboard.nextLine()));
 
+    // i 번째 배열에 수업 정보를 담고 있는 Lesson 객체(의 주소)를 보관한다.
     list.add(lesson);
 
     System.out.println("저장하였습니다.");
   }
 
   public void detailLesson() {
+    
     int no = promptLessonNo();
+
     int index = indexOf(no);
-    if(!validate(index)) {
+    if(!validate(index))
       return;
-    }
-  
+    
     Lesson lesson = list.get(index);
 
+    if (lesson == null) {
+      System.out.println("해당 수업을 찾을 수 없습니다.");
+      return;
+    }
     System.out.printf("수업명 : %s\n", lesson.getTitle());
-    System.out.printf("수업내용 : %s\n", lesson.getContents());
+    System.out.printf("수업 내용: %s\n", lesson.getContents());
     System.out.printf("기간 : %s ~ %s\n", lesson.getStartDate(), lesson.getEndDate());
     System.out.printf("총 수업시간 : %d\n", lesson.getTotalHours());
     System.out.printf("일 수업시간 : %d\n", lesson.getDayHours());
 
   }
 
-  public void updateLesson() {
+  public void deleteLesson() {
+
     int no = promptLessonNo();
+
     int index = indexOf(no);
-    if(!validate(index)) {
+
+    if (index == -1) {
+      System.out.println("해당 수업을 찾을 수 없습니다.");
       return;
     }
 
+    list.remove(index);
+    System.out.println("해당 수업을 삭제했습니다.");
+  }
+
+  public void updateLesson() {
+    
+    int no = promptLessonNo();
+
+    int index = indexOf(no);
+    if(!validate(index))
+      return;
 
     Lesson lesson = list.get(index);
+
     Lesson temp = new Lesson();
     temp.setNo(lesson.getNo());
 
-    System.out.printf("수업명(%s)? ", lesson.getTitle());
+    System.out.printf("수업명? ( %s ) ", lesson.getTitle());
     String input = keyboard.nextLine();
     if(input.length() > 0) {
       temp.setTitle(input);
@@ -93,50 +117,40 @@ public class LessonHandler {
     temp.setContents(input.length() > 0 ? 
         input  : lesson.getContents());
 
-    System.out.printf("시작일(%s)? ", lesson.getStartDate());
+    System.out.printf("시작일( %s )? ", lesson.getStartDate());
     input = keyboard.nextLine();
-    if(input.length() > 0) {
-      temp.setStartDate(Date.valueOf(input));
-    } else {
-      temp.setStartDate(lesson.getStartDate());
-    }
-    System.out.printf("종료일(%s)? ", lesson.getEndDate());
+    temp.setStartDate(input.length() > 0 ? 
+        Date.valueOf(input)  : lesson.getStartDate());
+
+    System.out.printf("종료일( %s )? ", lesson.getEndDate());
     input = keyboard.nextLine();
-    if(input.length() > 0) {
-      temp.setEndDate(Date.valueOf(input));
-    } else {
-      temp.setEndDate(lesson.getEndDate());
-    }
-    System.out.printf("총 수업시간(%d)? ", lesson.getTotalHours());
+    temp.setEndDate(input.length() > 0 ? 
+        Date.valueOf(input)  : lesson.getEndDate());
+
+    System.out.printf("총 수업시간( %d )? ", lesson.getTotalHours());
     input = keyboard.nextLine();
-    if(input.length() > 0) {
-      temp.setTotalHours(Integer.parseInt(input));
-    } else {
-      temp.setTotalHours(lesson.getTotalHours());
-    }
-    System.out.printf("일 수업시간(%d)? ", lesson.getDayHours());
+    temp.setTotalHours(input.length() > 0 ? 
+        Integer.parseInt(input)  : lesson.getTotalHours());
+
+    System.out.printf("일 수업시간( %d )? ", lesson.getDayHours());
     input = keyboard.nextLine();
-    if(input.length() > 0) {
-      temp.setDayHours(Integer.parseInt(input));
-    } else {
-      temp.setDayHours(lesson.getDayHours());
-    }
+    temp.setDayHours(input.length() > 0 ? 
+        Integer.parseInt(input)  : lesson.getDayHours());
 
     list.set(index, temp);
 
-
   }
 
-  public void deleteLesson() {
+  private int indexOf(int lessonNo) {
 
-    int no = promptLessonNo();
+    for(int i = 0; i < list.size(); i++) {
+      Lesson item = list.get(i);
+      if (item.getNo() == lessonNo) {
+        return i;
+      }
+    }
 
-    int index = indexOf(no);
-    if(!validate(index))
-      return;
-    
-    list.remove(index);
-    System.out.println("수업을 삭제했습니다.");
+    return -1;
   }
 
   private int promptLessonNo() {
@@ -151,14 +165,7 @@ public class LessonHandler {
     }
     return true;
   }
-  private int indexOf(int LessonNo) {
-
-    for(int i = 0; i < list.size() ; i++) {
-      Lesson item = list.get(i);
-      if(item.getNo() == LessonNo) {
-        return i;
-      }
-    }
-    return -1;
-  }
 }
+
+
+

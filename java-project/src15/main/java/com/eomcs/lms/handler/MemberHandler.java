@@ -1,4 +1,5 @@
 package com.eomcs.lms.handler;
+
 import java.sql.Date;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
@@ -11,15 +12,16 @@ public class MemberHandler {
   
   public MemberHandler(Scanner keyboard) {
     this.keyboard = keyboard;
-    this.list = new ArrayList<>(20);
+    this.list = new ArrayList<>();
   }
-  
+ 
   public void listMember() {
-    Member[] members = list.toArray(new Member[] {});
+   Member[] members = list.toArrays(new Member[0]);
+    
     for (Member member : members) {
       System.out.printf("%3d, %-4s, %-20s, %-15s, %s\n", 
-          member.getNo(), member.getName(), 
-          member.getEmail(), member.getTel(), member.getRegisteredDate());
+         member.getNo(), member.getName(), member.getEmail(), 
+         member.getTel(), member.getRegisteredDate());
     }
   }
 
@@ -44,7 +46,7 @@ public class MemberHandler {
     System.out.print("전화? ");
     member.setTel(keyboard.nextLine());
   
-    member.setRegisteredDate(new Date(System.currentTimeMillis())); 
+    member.setRegisteredDate(new Date(System.currentTimeMillis()));
     
     list.add(member);
     

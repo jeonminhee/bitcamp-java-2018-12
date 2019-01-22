@@ -1,4 +1,4 @@
-package com.eomcs.lms.handler;
+package com.eomcs.util;
 
 import java.util.Arrays;
 
@@ -11,6 +11,7 @@ public class ArrayList<E> {
   public ArrayList() {
     list = new Object[LENGTH];
   }
+
   @SuppressWarnings("unchecked")
   public E[] toArrays(E[] sampleArr) {
     return (E[]) Arrays.copyOf(list, size, sampleArr.getClass());
@@ -24,9 +25,10 @@ public class ArrayList<E> {
     list[size++] = obj;
 
   }
+
   @SuppressWarnings("unchecked")
   public E  get(int index) {
-    if (index < 0 || index >= size) 
+    if (index < 0  || index >= size) 
       return null;
 
     return (E) this.list[index];
@@ -41,17 +43,24 @@ public class ArrayList<E> {
 
     return  old;
   }
+  
   public E  remove (int index) {
-    if (index < 0 || index >= size)
+    if (index < 0  || index >= size) 
       return null;
 
-    @SuppressWarnings("unchecked")
-    E old = (E)list[index];
+    E obj = (E) list[index];
 
-    int newSize = size - 1;
-    System.arraycopy(list, index + 1, list, index, newSize - index);
-    list[size = newSize] = null;
-    return old;
+    for(int i = index; i < size - 1; i++ )
+      list[i] = list[i + 1];
+
+    size--;
+
+    return obj;
+  }
+
+  public int size() {
+    return this.size;
   }
 }
+
 
