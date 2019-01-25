@@ -4,7 +4,7 @@ package com.eomcs.util;
 // Queue가 보관하는 데이터 타입을 E라고 가정하자.
 // => E라고 가정한 상태에서 코드를 작성한다.
 // 
-public class Queue<E> extends LinkedList<E> implements Cloneable{
+public class Queue<E> extends LinkedList<E> implements Cloneable {
 
   public void offer(E value) {
     this.add(value);
@@ -19,7 +19,7 @@ public class Queue<E> extends LinkedList<E> implements Cloneable{
     return size == 0;
 
   }
-
+  
   // 복제 기능 추가
   // => 그냥 Object에서 상속받은 clone() 메서드를 오버라이딩 하면 된다.
   // => 그리고 public으로 공개한다.
@@ -37,26 +37,6 @@ public class Queue<E> extends LinkedList<E> implements Cloneable{
       temp.add(this.get(i));
     }
     return temp;
-  }
-
-  public Iterator<E> iterator() throws CloneNotSupportedException{
-
-    return new Iterator<>() {
-
-      Queue<E> temp = Queue.this.clone();
-
-      @Override
-      public boolean hasNext() {
-        return temp.size() > 0;
-      }
-
-      @Override
-      public E next() {
-
-        return temp.poll();
-      }
-    };
-
-  }
-
+    }
+  
 }

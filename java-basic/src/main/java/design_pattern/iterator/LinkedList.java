@@ -1,5 +1,5 @@
 // 제네릭 적용하기
-package algorithm.data_structure.linkedlist3;
+package design_pattern.iterator;
 
 // LinkedList에 보관되는 값의 타입을 E라고 가정한다.
 // => E 타입이라고 가정하고 코드를 작성한다.
@@ -155,6 +155,22 @@ public class LinkedList<E> {
     public Node(E value) {
      this.value = value;
     }
+  }
+  public Iterator<E> iterator() {
+    
+    return new Iterator<E>() {
+     
+      int index = 0;
+      
+      @Override
+      public boolean hasNext() {
+        return index < size();
+      }
+      @Override
+      public E next() {
+        return (E) get(index++);
+      }
+    };
   }
   
 }
