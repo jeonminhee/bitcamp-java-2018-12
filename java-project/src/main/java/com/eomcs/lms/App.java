@@ -37,8 +37,8 @@ public class App {
 
   public static void main(String[] args) {
 
-    ArrayList<Board> boardList = new ArrayList<>();
     ArrayList<Lesson> lessonList = new ArrayList<>();
+    ArrayList<Board> boardList = new ArrayList<>();
     LinkedList<Member> memberList = new LinkedList<>();
     HashMap<String, Command> commandMap = new HashMap<>();
 
@@ -97,7 +97,12 @@ public class App {
         if(commandHandler == null)
         System.out.println("실행할 수 없는 명령입니다.");
         else{
+          try {
           commandHandler.execute();
+          } catch (Exception e) {
+            // 예외가 발생하면 다음 문장을 실행한다. 그리고 계속 프로그램을 실행한다.
+            System.out.printf("작업 중 오류 발생 : %s\n", e.toString());
+          }
         }
       }
 
