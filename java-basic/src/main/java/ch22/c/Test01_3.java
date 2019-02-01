@@ -1,26 +1,30 @@
-// 버퍼 사용 - 사용 후
+// 버퍼 사용 - 버퍼를 적용하여 데이터 읽기를 대신 처리해주는 도우미 클래스 사용
 package ch22.c;
 
 import java.io.FileInputStream;
 
-public class Test01_2 {
+public class Test01_3 {
   public static void main(String[] args) {
 
     try {
-    FileInputStream in = new FileInputStream("jls11.pdf");
+    FileInputStream in = new FileInputStream("고양이를 호로로록 빨아들이는 함정.mp4");
+    BufferdInputStream in2 = new BufferdInputStream(in);
     
     System.out.println("데이터 읽는 중 . . . .");
     
     long start = System.currentTimeMillis();
     
-    byte[] buf = new byte[1000];
-    int len = 0;
-    while((len = in.read(buf)) != -1) {
-      }
+    int b;
+    int count = 0;
+    while((b = in2.read()) != -1) {
+      count++;
+
+    }
     
       long end = System.currentTimeMillis();
       
       System.out.println(end - start);
+      System.out.println(count);
       
       in.close();
     
