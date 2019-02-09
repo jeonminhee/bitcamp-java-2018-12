@@ -1,57 +1,94 @@
 // 계산기 서버 만들기
 package ch23.c;
 
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class CalculatorServer {
-  
-  
+
+
   public static void main(String[] args) {
 
 
-    try(Scanner keyboard = new Scanner(System.in);
-        ServerSocket serverSocket = new ServerSocket(8888)){
-
-      System.out.println("서버와 연결되었음!");
-
+    try(ServerSocket serverSocket = new ServerSocket(8888)){
       
-      try (Socket socket = serverSocket.accept();
-          DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-          DataInputStream in = new DataInputStream(
-              new BufferedInputStream(socket.getInputStream()))){
+      System.out.println("사용자를 기다리는 중 . . .");
 
-        out.writeUTF("계산기 서버에 오신 걸 환영합니다!\n 계산식을 입력하세요!\n 예) 23 + 7\n>");
-        
-         String str = in.readUTF(); 
-         String tmp[] = str.split(" ");
-         int left = Integer.parseInt(tmp[0]);
-         int right = Integer.parseInt(tmp[2]);
-         int result = 0;
-         switch(tmp[1]) {
-           case "+" :
-             result = left + right;
-             break;
-           case "-" :
-             result = left - right;
-             break;
-           case "*" :
-             result = left * right;
-             break;
-           case "%" :
-             result = left % right;
-             break;
-         }
-         
-         out.writeUTF("결과는" + result + "입니다.");
-         out.flush();
+      try (Socket socket = serverSocket.accept();
+          DataOutputStream out = 
+              new DataOutputStream(socket.getOutputStream());
+          DataInputStream in = 
+              new DataInputStream(socket.getInputStream())){
+
+        out.writeUTF("계산기 서버에 오신 걸 환영합니다!\n 계산식을 입력하세요!\n 예) 23 + 7\n");
+        out.flush();
+
+        int result = 0;
+        String output = "";
+
+        while(true) {
+          
+          String str = in.readUTF();
+          
+          if(str.equals("quit")) {
+            out.writeUTF("안녕히가세요!");
+            out.flush();
+            break;
+          }
+          
+          try {
+          String tmp[] = str.split(" ");
+          int left = Integer.parseInt(tmp[0]);
+          int right = Integer.parseInt(tmp[2]);
+          
+          switch(tmp[1]) {
+            case "+" :
+              result = left + right;
+              output = "결과는 " + result + " 입니다.";
+              break;
+            case "-" :
+              result = left - right;
+              output = "결과는 " + result + " 입니다.";
+              break;
+            case "*" :
+              result = left * right;
+              output = "결과는 " + result + " 입니다.";
+              break;
+            case "%" :
+              result = left % right;
+              output = "결과는 " + result + " 입니다.";
+              break;
+            default : 
+              output = tmp[1] + "연산자를 지원하지 않습니다.";
+          }
+          
+          out.writeUTF(output);
+          out.flush();
+          
+          } catch (Exception e) {
+            
+            out.writeUTF("식의 형식이 잘못되었습니다.");
+            out.flush();
+            continue;
+            
+          }
+
+        } // while의 끝
+
       } 
 
     } catch (Exception e) {e.printStackTrace();}    
-    System.out.println("안녕히가세요!");
-  }
+    
+  } // main()의 끝
 }
+
+
+
+
+
+
+
+
+
