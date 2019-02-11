@@ -17,12 +17,13 @@ public class CalculatorClient {
       System.out.println(in.readUTF());
 
       while(true) {
-        System.out.println(">");
+        System.out.print(">");
         String input = keyboard.nextLine();
         out.writeUTF(input);
         out.flush();
 
         System.out.println(in.readUTF());
+        
         if(input.equals("quit")) {
           break;
         }
