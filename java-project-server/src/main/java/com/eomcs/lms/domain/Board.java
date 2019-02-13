@@ -3,14 +3,20 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class Board implements Cloneable, Serializable {
-  /**
-   * 
-   */
   private static final long serialVersionUID = 1L;
+
   private int no;
   private String contents;
   private Date createdDate;
   private int viewCount;
+  
+  public Board() {
+  }
+  
+  public Board(int no, String contents) {
+    this.no = no;
+    this.contents = contents;
+  }
   
   @Override
   public Board clone() throws CloneNotSupportedException {

@@ -3,8 +3,8 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class Lesson implements Cloneable, Serializable {
-  
   private static final long serialVersionUID = 1L;
+  
   private int no;
   private String title;
   private String contents;
@@ -12,6 +12,14 @@ public class Lesson implements Cloneable, Serializable {
   private Date endDate;
   private int totalHours;
   private int dayHours;
+  
+  public Lesson() {
+  }
+  
+  public Lesson(int no, String title) {
+    this.no = no;
+    this.title = title;
+  }
   
   @Override
   public Lesson clone() throws CloneNotSupportedException {

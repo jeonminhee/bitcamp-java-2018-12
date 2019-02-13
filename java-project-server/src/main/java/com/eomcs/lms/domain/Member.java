@@ -2,11 +2,9 @@ package com.eomcs.lms.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Member implements Cloneable, Serializable{
-  /**
-   * 
-   */
+public class Member implements Cloneable, Serializable {
   private static final long serialVersionUID = 1L;
+  
   private int no;
   private String name;
   private String email;
@@ -14,6 +12,14 @@ public class Member implements Cloneable, Serializable{
   private String photo;
   private String tel;
   private Date registeredDate;
+  
+  public Member() {
+  }
+  
+  public Member(int no, String name) {
+    this.no = no;
+    this.name = name;
+  }
   
   @Override
   public Member clone() throws CloneNotSupportedException {
