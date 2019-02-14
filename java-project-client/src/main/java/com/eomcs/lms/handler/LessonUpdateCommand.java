@@ -1,16 +1,17 @@
 package com.eomcs.lms.handler;
 import java.sql.Date;
-import java.util.List;
 import java.util.Scanner;
+import com.eomcs.lms.agent.LessonAgent;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonUpdateCommand implements Command {
 
   Scanner keyboard;
-  List<Lesson> list;
+  LessonAgent lessonagent;
 
-  public LessonUpdateCommand(Scanner keyboard) {
+  public LessonUpdateCommand(Scanner keyboard, LessonAgent lessonagent) {
     this.keyboard = keyboard;
+    this.lessonagent = lessonagent;
   }
 
   @Override
@@ -18,15 +19,9 @@ public class LessonUpdateCommand implements Command {
     System.out.print("번호? ");
     int no = Integer.parseInt(keyboard.nextLine());
 
-    int index = indexOfLesson(no);
-    if (index == -1) {
-      System.out.println("해당 수업을 찾을 수 없습니다.");
-      return;
-    }
-    
-    Lesson lesson = list.get(index);
-    
     try {
+      Lesson lesson = lessonagent.get(no);
+      
       // 일단 기존 값을 복제한다.
       Lesson temp = lesson.clone();
       
@@ -55,21 +50,12 @@ public class LessonUpdateCommand implements Command {
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setDayHours(Integer.parseInt(input));
       
-      list.set(index, temp);
-      
+      lessonagent.update(temp);
       System.out.println("수업을 변경했습니다.");
       
     } catch (Exception e) {
       System.out.println("변경 중 오류 발생!");
     }
   }
-  
-  private int indexOfLesson(int no) {
-    for (int i = 0; i < list.size(); i++) {
-      Lesson l = list.get(i);
-      if (l.getNo() == no)
-        return i;
-    }
-    return -1;
-  }
+
 }

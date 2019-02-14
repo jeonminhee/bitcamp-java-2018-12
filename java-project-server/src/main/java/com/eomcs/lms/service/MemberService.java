@@ -1,100 +1,92 @@
 // 11단계: AbstractService 상속 받기
 package com.eomcs.lms.service;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
-public class MemberService extends AbstractService<Member> {
+public class MemberService implements Service {
 
-  public void execute(String request) throws Exception {
+  MemberDao memberDao;
+
+  public MemberService(MemberDao memberDao) {
+    this.memberDao = memberDao;
+  }
+
+  public void execute(String request, ObjectInputStream in, ObjectOutputStream out) throws Exception {
 
     switch (request) {
       case "/member/add":
-        add();
+        add(in, out);
         break;
       case "/member/list":
-        list();
+        list(in, out);
         break;
       case "/member/detail":
-        detail();
+        detail(in, out);
         break;
       case "/member/update":
-        update();
+        update(in, out);
         break;
       case "/member/delete":
-        delete();
+        delete(in, out);
         break;  
       default:
         out.writeUTF("FAIL");
     }
     out.flush();
-    saveData();
-    loadData(filepath);
   }
 
-  private void add() throws Exception {
+  private void add(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     out.writeUTF("OK");
     out.flush();
-    list.add((Member)in.readObject());
+    memberDao.insert((Member)in.readObject());
     out.writeUTF("OK");
   }
 
-  private void list() throws Exception {
+  private void list(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     out.writeUTF("OK");
     out.flush();
     out.writeUTF("OK");
-    out.writeObject(list);
+    out.writeUnshared(memberDao.findAll());
   }
 
-  private void detail() throws Exception {
+  private void detail(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     out.writeUTF("OK");
     out.flush();
     int no = in.readInt();
 
-    for (Member m : list) {
-      if (m.getNo() == no) {
-        out.writeUTF("OK");
-        out.writeObject(m);
-        return;
-      }
+    Member m = memberDao.findByNo(no);
+    if(m == null) {
+      return;
     }
-
-    out.writeUTF("FAIL");
+    out.writeUTF("OK");
+    out.writeObject(m);
   }
 
-  private void update() throws Exception {
+  private void update(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     out.writeUTF("OK");
     out.flush();
     Member member = (Member) in.readObject();
 
-    int index = 0;
-    for (Member m : list) {
-      if (m.getNo() == member.getNo()) {
-        list.set(index, member);
-        out.writeUTF("OK");
-        return;
-      }
-      index++;
+    if(memberDao.update(member) == 0) {
+      out.writeUTF("FAIL");
+      return;
     }
-
-    out.writeUTF("FAIL");
+    out.writeUTF("OK");
   }
 
-  private void delete() throws Exception {
+  private void delete(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     out.writeUTF("OK");
     out.flush();
     int no = in.readInt();
 
-    int index = 0;
-    for (Member m : list) {
-      if (m.getNo() == no) {
-        list.remove(index);
-        out.writeUTF("OK");
-        return;
-      }
-      index++;
+    if(memberDao.delete(no) == 0) {
+      out.writeUTF("FAIL");    
+      return;
     }
-
-    out.writeUTF("FAIL");    
+    out.writeUTF("OK");
   }
 
 }

@@ -1,31 +1,27 @@
 package com.eomcs.lms.handler;
-import java.util.List;
 import java.util.Scanner;
+import com.eomcs.lms.agent.MemberAgent;
 import com.eomcs.lms.domain.Member;
 
 public class MemberUpdateCommand implements Command {
   
   Scanner keyboard;
-  List<Member> list;
+  MemberAgent memberagent;
   
-  public MemberUpdateCommand(Scanner keyboard) {
+  public MemberUpdateCommand(Scanner keyboard, MemberAgent memberagent) {
     this.keyboard = keyboard;
+    this.memberagent = memberagent;
   }
   
   @Override
   public void execute() {
     System.out.print("번호? ");
     int no = Integer.parseInt(keyboard.nextLine());
-
-    int index = indexOfMember(no);
-    if (index == -1) {
-      System.out.println("해당 회원을 찾을 수 없습니다.");
-      return;
-    }
-    
-    Member member = list.get(index);
     
     try {
+      
+      Member member = memberagent.get(no);
+      
       // 기존 값 복제
       Member temp = member.clone();
       
@@ -50,8 +46,7 @@ public class MemberUpdateCommand implements Command {
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setTel(input);
       
-      list.set(index, temp);
-      
+      memberagent.update(temp);
       System.out.println("회원을 변경했습니다.");
       
     } catch (Exception e) {
@@ -59,12 +54,4 @@ public class MemberUpdateCommand implements Command {
     }
   }
   
-  private int indexOfMember(int no) {
-    for (int i = 0; i < list.size(); i++) {
-      Member m = list.get(i);
-      if (m.getNo() == no)
-        return i;
-    }
-    return -1;
-  }
 }
