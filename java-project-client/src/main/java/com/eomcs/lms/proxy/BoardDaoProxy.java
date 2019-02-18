@@ -1,18 +1,19 @@
-package com.eomcs.lms.agent;
+package com.eomcs.lms.proxy;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
+import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 
-public class BoardAgent {
+public class BoardDaoProxy implements BoardDao{
 
   String serverAddr;
   int port;
   String rootPath;
   
-  public BoardAgent(String serverAddr, int port, String rootPath) {
+  public BoardDaoProxy(String serverAddr, int port, String rootPath) {
     this.serverAddr = serverAddr;
     this.port = port;
     this.rootPath = rootPath;
@@ -20,7 +21,7 @@ public class BoardAgent {
   
   
   @SuppressWarnings("unchecked")
-  public List<Board> list() throws Exception {
+  public List<Board> findAll(){
 
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -38,10 +39,12 @@ public class BoardAgent {
 
       return (List<Board>) in.readObject();
 
-    } 
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
-  public void add(Board board) throws Exception {
+  public void insert(Board board) {
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
@@ -58,10 +61,12 @@ public class BoardAgent {
       if (!status.equals("OK")) {
         throw new Exception("서버에서 데이터 저장실패!");
       }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 
-  public Board get(int no) throws Exception {
+  public Board findByNo(int no) {
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
@@ -80,10 +85,12 @@ public class BoardAgent {
       throw new Exception("서버에서 게시글 가져오기 실패!");
 
     return (Board) in.readObject();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 
-  public void update(Board board) throws Exception{
+  public int update(Board board) {
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
@@ -98,10 +105,14 @@ public class BoardAgent {
       String status = in.readUTF();
       if (!status.equals("OK"))
         throw new Exception("서버에서 게시글 변경하기 실패.");
+      
+      return 1;
+    }  catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 
-  public void delete(int no) throws Exception{
+  public int delete(int no) {
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
@@ -118,6 +129,10 @@ public class BoardAgent {
       if (!status.equals("OK")) {
         throw new Exception("서버에서 게시글 삭제 실패");
       }
+      
+      return 1;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 }
