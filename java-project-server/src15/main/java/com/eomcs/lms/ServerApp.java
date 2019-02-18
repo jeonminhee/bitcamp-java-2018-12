@@ -1,4 +1,4 @@
-// 15단계 : 여러 클라이언트 요청을 처리할 때의 문제점과 해결책(멀티 스레드 적용)
+// 14단계: DAO에 프록시 패턴 적용하기
 package com.eomcs.lms;
 
 import java.io.ObjectInputStream;
