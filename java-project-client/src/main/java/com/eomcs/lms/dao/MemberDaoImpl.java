@@ -1,28 +1,21 @@
-package com.eomcs.lms.proxy;
+package com.eomcs.lms.dao;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
-import com.eomcs.lms.dao.BoardDao;
-import com.eomcs.lms.domain.Board;
+import com.eomcs.lms.domain.Member;
 
-public class BoardDaoProxy implements BoardDao{
+public class MemberDaoImpl implements MemberDao{
 
   String serverAddr;
   int port;
   String rootPath;
-  
-  public BoardDaoProxy(String serverAddr, int port, String rootPath) {
-    this.serverAddr = serverAddr;
-    this.port = port;
-    this.rootPath = rootPath;
-  }
-  
-  
-  @SuppressWarnings("unchecked")
-  public List<Board> findAll(){
 
+  public MemberDaoImpl() {}
+
+  @SuppressWarnings("unchecked")
+  public List<Member> findAll() {
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
@@ -37,14 +30,13 @@ public class BoardDaoProxy implements BoardDao{
       if (!status.equals("OK")) 
         throw new Exception("서버에서 게시글 목록 가져오기 실패!");
 
-      return (List<Board>) in.readObject();
-
-    } catch (Exception e) {
+      return (List<Member>) in.readObject();
+    }  catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 
-  public void insert(Board board) {
+  public void insert(Member member) {
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
@@ -53,7 +45,7 @@ public class BoardDaoProxy implements BoardDao{
       if (!in.readUTF().equals("OK"))
         throw new Exception("서버에서 해당 명령어를 처리하지 못합니다.");
 
-      out.writeObject(board);
+      out.writeObject(member);
       out.flush();
 
       String status = in.readUTF();
@@ -66,66 +58,67 @@ public class BoardDaoProxy implements BoardDao{
     }
   }
 
-  public Board findByNo(int no) {
+  public Member findByNo(int no) {
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
-    
-    out.writeUTF(rootPath + "/detail");
-    out.flush();
-    if (!in.readUTF().equals("OK"))
-      throw new Exception("서버에서 해당 명령어를 처리하지 못합니다.");
 
-    out.writeInt(no);
-    out.flush();
+      out.writeUTF(rootPath + "/detail");
+      out.flush();
+      if (!in.readUTF().equals("OK"))
+        throw new Exception("서버에서 해당 명령어를 처리하지 못합니다.");
 
-    String status = in.readUTF();
+      out.writeInt(no);
+      out.flush();
 
-    if (!status.equals("OK")) 
-      throw new Exception("서버에서 게시글 가져오기 실패!");
+      String status = in.readUTF();
 
-    return (Board) in.readObject();
+      if (!status.equals("OK")) 
+        throw new Exception("서버에서 게시글 가져오기 실패!");
+
+      return (Member) in.readObject();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
-
-  public int update(Board board) {
+  public int update(Member member) {
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
+
       out.writeUTF(rootPath + "/update");
       out.flush();
       if (!in.readUTF().equals("OK"))
         throw new Exception("서버에서 해당 명령어를 처리하지 못합니다.");
-      
-      out.writeObject(board);
+
+      out.writeObject(member);
       out.flush();
-      
+
       String status = in.readUTF();
       if (!status.equals("OK"))
         throw new Exception("서버에서 게시글 변경하기 실패.");
       
       return 1;
-    }  catch (Exception e) {
+      
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
-
   public int delete(int no) {
     try(Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
+
       out.writeUTF(rootPath + "/delete");
       out.flush();
       if (!in.readUTF().equals("OK"))
         throw new Exception("서버에서 해당 명령어를 처리하지 못합니다.");
-      
+
       out.writeInt(no);
       out.flush();
-      
+
       String status = in.readUTF();
-      
+
       if (!status.equals("OK")) {
         throw new Exception("서버에서 게시글 삭제 실패");
       }
