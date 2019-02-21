@@ -22,7 +22,6 @@ public class MemberDetailCommand implements Command {
       Member member = memberDao.findByNo(no);
       System.out.printf("이름: %s\n", member.getName());
       System.out.printf("이메일: %s\n", member.getEmail());
-      System.out.printf("암호: %s\n", member.getPassword());
       System.out.printf("사진: %s\n", member.getPhoto());
       System.out.printf("전화: %s\n", member.getTel());
       System.out.printf("가입일: %s\n", member.getRegisteredDate());

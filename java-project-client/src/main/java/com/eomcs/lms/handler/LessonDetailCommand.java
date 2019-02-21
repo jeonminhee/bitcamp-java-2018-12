@@ -19,12 +19,17 @@ public class LessonDetailCommand implements Command {
     
     try {
       Lesson lesson = lessonDao.findByNo(no);
-      System.out.printf("수업명O: %s\n", lesson.getTitle());
+      if(lesson == null) {
+        System.out.println("해당 수업을 찾을 수 없습니다.");
+        return;
+      }
+      System.out.printf("수업명: %s\n", lesson.getTitle());
       System.out.printf("설명: %s\n", lesson.getContents());
       System.out.printf("기간: %s ~ %s\n", lesson.getStartDate(), lesson.getEndDate());
       System.out.printf("총수업시간: %d\n", lesson.getTotalHours());
       System.out.printf("일수업시간: %d\n", lesson.getDayHours());
     } catch (Exception e) {
+      e.printStackTrace();
       System.out.printf("게시글 상세정보 출력 오류 : %s\n", e.getMessage());
     }
 

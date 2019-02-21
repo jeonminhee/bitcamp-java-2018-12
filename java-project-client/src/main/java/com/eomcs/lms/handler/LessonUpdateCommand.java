@@ -21,7 +21,10 @@ public class LessonUpdateCommand implements Command {
 
     try {
       Lesson lesson = lessonDao.findByNo(no);
-      
+      if(lesson == null) {
+        System.out.println("해당 번호의 수업이 없습니다.");
+        return;
+      }
       // 일단 기존 값을 복제한다.
       Lesson temp = lesson.clone();
       

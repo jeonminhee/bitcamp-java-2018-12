@@ -21,8 +21,6 @@ public class MemberUpdateCommand implements Command {
     try {
       
       Member member = memberDao.findByNo(no);
-      
-      // 기존 값 복제
       Member temp = member.clone();
       
       System.out.printf("이름(%s)? ", member.getName());
@@ -50,6 +48,7 @@ public class MemberUpdateCommand implements Command {
       System.out.println("회원을 변경했습니다.");
       
     } catch (Exception e) {
+      e.printStackTrace();
       System.out.println("변경 중 오류 발생!");
     }
   }

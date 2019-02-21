@@ -1,123 +1,113 @@
 package com.eomcs.lms.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import com.eomcs.lms.domain.Board;
 
 public class BoardDaoImpl implements BoardDao{
 
+  Connection con;
 
-  public BoardDaoImpl() {}
+  public BoardDaoImpl(Connection con) {
+    this.con = con;
+  }
 
+  public List<Board> findAll(){
+    try(PreparedStatement stmt = con.prepareStatement(
+        "select board_id, conts, cdt, vw_cnt from lms_board" +
+        " order by board_id desc")){
 
-  public void findAll(){
-    try (Connection con = DriverManager.getConnection(
-        "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
+      try(ResultSet rs = stmt.executeQuery()) {
 
-      try (Statement stmt = con.createStatement()) {
+        List<Board> list = new ArrayList<>();
+        while(rs.next()) {
+          Board board = new Board();
+          board.setNo(rs.getInt("board_id"));
+          board.setContents(rs.getString("conts"));
+          board.setCreatedDate(rs.getDate("cdt"));
+          board.setViewCount(rs.getInt("vw_cnt"));
 
-        try (ResultSet rs = stmt.executeQuery(
-            "select * from board order by id desc")) {
-
-          while (rs.next()) {
-            System.out.printf("%d, %s, %s, %d\n", 
-                rs.getInt("id"), 
-                rs.getString("contents"), 
-                rs.getDate("created_date"),
-                rs.getInt("view_count"));
-          }
+          list.add(board);
         }
+        return list;
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
   }
 
   public void insert(Board board) {
-    try(Connection con = DriverManager.getConnection( "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")){
+    try(PreparedStatement stmt = con.prepareStatement(
+        "insert into lms_board(conts) values(?)")){
 
-      try(Statement stmt = con.createStatement()){
+      stmt.setString(1, board.getContents());
+      stmt.executeUpdate();
 
-        stmt.executeUpdate(
-            "insert into board(contents)"
-                + " values('" + board.getContents() + "')");
-
-        System.out.println("저장 완료!");
-      }
 
     } catch (Exception e) {
-      System.out.println("저장 실패!");
+      throw new RuntimeException(e);
     }
+
   }
-  public void findByNo(int no) {
 
-    try (Connection con = DriverManager.getConnection(
-        "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
+  public Board findByNo(int no) {
+    try {
+      try(PreparedStatement stmt = con.prepareStatement(
+          "update lms_board set vw_cnt = vw_cnt + 1 where board_id = ?")){
+        stmt.setInt(1, no);
+        stmt.executeUpdate();
+      }
 
-      try (Statement stmt = con.createStatement()) {
+      try(PreparedStatement stmt = con.prepareStatement(
+          "select board_id, conts, cdt, vw_cnt from lms_board where board_id = ?")){
 
-        try (ResultSet rs = stmt.executeQuery(
-            "select * from board where id = " + no)) {
+        stmt.setInt(1, no);
 
-          if (rs.next()) {
-            System.out.printf("내용: %s\n", rs.getString("contents"));
-            System.out.printf("등록일: %s\n", rs.getDate("created_date"));
-            System.out.printf("조회수: %d\n", rs.getInt("view_count"));
+        try(ResultSet rs = stmt.executeQuery()){
+
+          if(rs.next()) {
+            Board board = new Board();
+            board.setNo(rs.getInt("board_id"));
+            board.setContents(rs.getString("conts"));
+            board.setCreatedDate(rs.getDate("cdt"));
+            board.setViewCount(rs.getInt("vw_cnt"));
+
+            return board;
           } else {
-            System.out.println("해당 번호의 게시물이 존재하지 않습니다.");
+            return null;
           }
         }
       }
-
     } catch (Exception e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
   }
 
-  public void update(String input, int no) {
-    try (Connection con = DriverManager.getConnection(
-        "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
+  public int update(Board board) {
+    try(PreparedStatement stmt = con.prepareStatement(
+        "update lms_board set conts = ? where board_id = ?")){
+      stmt.setString(1, board.getContents());
+      stmt.setInt(2, board.getNo());
 
-      try (PreparedStatement stmt = con.prepareStatement(
-          "update board set contents = ? where id = ?")) {
+      return stmt.executeUpdate();
 
-        stmt.setString(1, input);
-        stmt.setInt(2, no);
-
-        int count = stmt.executeUpdate();
-
-        if (count == 0) {
-          System.out.println("해당 번호의 게시물이 존재하지 않습니다.");
-        } else {
-          System.out.println("변경하였습니다.");
-        }
-      } 
     } catch (Exception e) {
-      System.out.println("업데이트 중 오류 발생!");
+      throw new RuntimeException(e);
     }
   }
 
-  public void delete(int no) {
-    try (Connection con = DriverManager.getConnection(
-        "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
+  public int delete(int no) {
+    try(PreparedStatement stmt = con.prepareStatement(
+        "delete from lms_board where board_id = ?")){
 
-      try (Statement stmt = con.createStatement()) {
+      stmt.setInt(1, no);
 
-        int count = stmt.executeUpdate(
-            "delete from board where id = " + no);
-
-        if (count == 0) {
-          System.out.println("해당 번호의 게시물이 존재하지 않습니다.");
-        } else {
-          System.out.println("삭제하였습니다.");
-        }
-      }
-
+      return stmt.executeUpdate();
     } catch (Exception e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
   }
 }

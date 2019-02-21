@@ -1,52 +1,35 @@
-// 16단계 : DAO에 JDBC 적용하기
-// => 현재 프로젝트에 mariadb JDBC 드라이버를 추가한다.
-// => 수업(Lesson), 회원(Member), 게시물(Board) 정보를 저장할 테이블을 생성한다.
-// => BoardDaoImpl, MemberDaoImpl, LessonDaoImpl 클래스에 JDBC 를 적용한다.
+// 15단계 : 여러 클라이언트 요청을 처리할 때의 문제점과 해결책(멀티 스레드 적용)
 package com.eomcs.lms;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
-import com.eomcs.lms.dao.BoardDaoImpl;
-import com.eomcs.lms.handler.BoardAddCommand;
-import com.eomcs.lms.handler.BoardDeleteCommand;
-import com.eomcs.lms.handler.BoardDetailCommand;
-import com.eomcs.lms.handler.BoardListCommand;
-import com.eomcs.lms.handler.BoardUpdateCommand;
+import com.eomcs.lms.context.ApplicationContextListener;
 import com.eomcs.lms.handler.Command;
 
 public class App {
+  
+  ArrayList<ApplicationContextListener> listeners = new ArrayList<>();
 
   Scanner keyboard = new Scanner(System.in);
   Stack<String> commandHistory = new Stack<>();
   Queue<String> commandHistory2 = new LinkedList<>();
+  
+  public void addApplicationContextListener(ApplicationContextListener listner) {
+    listeners.add(listner);
+  }
 
-  public void service() {
-
-    Map<String,Command> commandMap = new HashMap<>();
-
-//    LessonDaoImpl lessonDao = new LessonDaoImpl();
-//    commandMap.put("/lesson/add", new LessonAddCommand(keyboard, lessonDao));
-//    commandMap.put("/lesson/list", new LessonListCommand(keyboard, lessonDao));
-//    commandMap.put("/lesson/detail", new LessonDetailCommand(keyboard, lessonDao));
-//    commandMap.put("/lesson/update", new LessonUpdateCommand(keyboard, lessonDao));
-//    commandMap.put("/lesson/delete", new LessonDeleteCommand(keyboard, lessonDao));
-//
-//    MemberDaoImpl memberDao = new MemberDaoImpl();
-//    commandMap.put("/member/add", new MemberAddCommand(keyboard, memberDao));
-//    commandMap.put("/member/list", new MemberListCommand(keyboard, memberDao));
-//    commandMap.put("/member/detail", new MemberDetailCommand(keyboard, memberDao));
-//    commandMap.put("/member/update", new MemberUpdateCommand(keyboard, memberDao));
-//    commandMap.put("/member/delete", new MemberDeleteCommand(keyboard, memberDao));
-
-    BoardDaoImpl boardDao = new BoardDaoImpl();
-    commandMap.put("/board/add", new BoardAddCommand(keyboard, boardDao));
-    commandMap.put("/board/list", new BoardListCommand(keyboard, boardDao));
-    commandMap.put("/board/detail", new BoardDetailCommand(keyboard, boardDao));
-    commandMap.put("/board/update", new BoardUpdateCommand(keyboard, boardDao));
-    commandMap.put("/board/delete", new BoardDeleteCommand(keyboard, boardDao));
+  public void service() throws Exception {
+    
+    Map<String,Object> context = new HashMap<>();
+    context.put("keyboard", keyboard);
+    
+    for(ApplicationContextListener listener : listeners) {
+      listener.ContextInitialize(context);
+    }
 
     while (true) {
 
@@ -69,7 +52,7 @@ public class App {
         continue;
       } 
 
-      Command commandHandler = commandMap.get(command);
+      Command commandHandler = (Command) context.get(command);
 
       if (commandHandler == null) {
         System.out.println("실행할 수 없는 명령입니다.");
@@ -84,6 +67,10 @@ public class App {
       } 
     }
     keyboard.close();
+    
+    for(ApplicationContextListener listener : listeners) {
+      listener.ContextDestroyed(context);
+    }
   }
 
   @SuppressWarnings("unchecked")
@@ -110,9 +97,10 @@ public class App {
   }
 
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
     App app = new App();
 
+    app.addApplicationContextListener(new ApplicationInitializer());
     // App 을 실행한다.
     app.service();
   }
