@@ -18,12 +18,8 @@ public class BoardDeleteCommand implements Command {
     int no = Integer.parseInt(keyboard.nextLine());
 
     try {
-      if(boardDao.delete(no) == 0) {
-        System.out.println("해당 번호의 게시물이 없습니다.");
-        return;
-      } else {
+      boardDao.delete(no);
       System.out.println("게시글을 삭제했습니다.");
-      }
     } catch (Exception e) {
       System.out.printf("게시글 삭제 오류 : %s\n", e.getMessage());
     }

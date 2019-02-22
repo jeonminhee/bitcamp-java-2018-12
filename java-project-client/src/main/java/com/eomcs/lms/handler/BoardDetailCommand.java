@@ -22,7 +22,6 @@ public class BoardDetailCommand implements Command {
       Board board = boardDao.findByNo(no);
       System.out.printf("내용: %s\n", board.getContents());
       System.out.printf("작성일: %s\n", board.getCreatedDate());
-      System.out.printf("조회수: %d\n", board.getViewCount());
     } catch (Exception e) {
       System.out.printf("게시글 상세 정보 출력 오류! : %s\n", e.getMessage());
     }
