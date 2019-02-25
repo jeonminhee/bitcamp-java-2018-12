@@ -3,11 +3,13 @@ package com.eomcs.lms.dao;
 
 import java.util.List;
 import com.eomcs.lms.domain.Board;
+import com.eomcs.lms.domain.Member;
 
 public interface BoardDao {
 
   void insert(Board board);
   List<Board> findAll();
+  public List<Board> findByKeyword(String keyword);
   Board findByNo(int no);
   int update(Board board);
   int delete(int no);

@@ -12,11 +12,13 @@ import com.eomcs.lms.handler.BoardAddCommand;
 import com.eomcs.lms.handler.BoardDeleteCommand;
 import com.eomcs.lms.handler.BoardDetailCommand;
 import com.eomcs.lms.handler.BoardListCommand;
+import com.eomcs.lms.handler.BoardSearchCommand;
 import com.eomcs.lms.handler.BoardUpdateCommand;
 import com.eomcs.lms.handler.LessonAddCommand;
 import com.eomcs.lms.handler.LessonDeleteCommand;
 import com.eomcs.lms.handler.LessonDetailCommand;
 import com.eomcs.lms.handler.LessonListCommand;
+import com.eomcs.lms.handler.LessonSearchCommand;
 import com.eomcs.lms.handler.LessonUpdateCommand;
 import com.eomcs.lms.handler.MemberAddCommand;
 import com.eomcs.lms.handler.MemberDeleteCommand;
@@ -46,6 +48,7 @@ public class ApplicationInitializer implements ApplicationContextListener{
       // Command 객체 준비
       context.put("/lesson/add", new LessonAddCommand(lessonDao));
       context.put("/lesson/list", new LessonListCommand(lessonDao));
+      context.put("/lesson/search", new LessonSearchCommand(lessonDao));
       context.put("/lesson/detail", new LessonDetailCommand(lessonDao));
       context.put("/lesson/update", new LessonUpdateCommand(lessonDao));
       context.put("/lesson/delete", new LessonDeleteCommand(lessonDao));
@@ -60,6 +63,7 @@ public class ApplicationInitializer implements ApplicationContextListener{
       
       context.put("/board/add", new BoardAddCommand(boardDao));
       context.put("/board/list", new BoardListCommand(boardDao));
+      context.put("/board/search", new BoardSearchCommand(boardDao));
       context.put("/board/detail", new BoardDetailCommand(boardDao));
       context.put("/board/update", new BoardUpdateCommand(boardDao));
       context.put("/board/delete", new BoardDeleteCommand(boardDao));

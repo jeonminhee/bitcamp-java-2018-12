@@ -41,6 +41,35 @@ public class BoardDaoImpl implements BoardDao{
     }
   }
 
+  public List<Board> findByKeyword(String keyword){
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select board_id, conts, cdt, vw_cnt from lms_board"
+        + " where conts like concat('%', ?, '%')"
+        + " or vw_cnt like concat(?)"
+        + " order by board_id asc")) {
+      
+      stmt.setString(1, keyword);
+      stmt.setString(2, keyword);
+
+      try (ResultSet rs = stmt.executeQuery()) {
+
+        List<Board> list = new ArrayList<>();
+        while (rs.next()) {
+          Board board = new Board();
+          board.setNo(rs.getInt("board_id"));
+          board.setContents(rs.getString("conts")); 
+          board.setCreatedDate(rs.getDate("cdt"));
+          board.setViewCount(rs.getInt("vw_cnt"));
+
+          list.add(board);
+        }
+        return list;
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
 
   
   public void insert(Board board) {
