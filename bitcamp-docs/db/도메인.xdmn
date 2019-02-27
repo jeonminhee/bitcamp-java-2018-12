@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<e:DomainDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:e="http://exerd.tomato.com/model" UUID="DDefinition_N67NgDnZEemklKtfqIlTog" productId="com.tomato.db.db2" version="2.5.5.20190218-1731">
+  <domain UUID="Domain_N67NgTnZEemklKtfqIlTog" name="문자" suggestedDataType="VARCHAR(255)">
+    <domain UUID="Domain_N67NgjnZEemklKtfqIlTog" name="주민등록번호" suggestedDataType="VARCHAR(13)"/>
+    <domain UUID="Domain_N67NgznZEemklKtfqIlTog" name="주소"/>
+    <domain UUID="Domain_N67NhDnZEemklKtfqIlTog" name="웹주소"/>
+    <domain UUID="Domain_N67NhTnZEemklKtfqIlTog" name="전화번호" suggestedDataType="VARCHAR(30)"/>
+    <domain UUID="Domain_N67NhjnZEemklKtfqIlTog" name="이메일" suggestedDataType="VARCHAR(40)"/>
+    <domain UUID="Domain_N67NhznZEemklKtfqIlTog" name="이름" suggestedDataType="VARCHAR(50)"/>
+    <domain UUID="Domain_N67NiDnZEemklKtfqIlTog" name="제목" suggestedDataType="VARCHAR(255)"/>
+    <domain UUID="Domain_N67NiTnZEemklKtfqIlTog" name="내용" suggestedDataType="TEXT"/>
+    <domain UUID="Domain_N67NijnZEemklKtfqIlTog" name="암호" suggestedDataType="VARCHAR(100)"/>
+    <domain UUID="Domain_N67NiznZEemklKtfqIlTog" name="우편번호" suggestedDataType="CHAR(5)"/>
+    <domain UUID="Domain_N67NjDnZEemklKtfqIlTog" name="성별" suggestedDataType="CHAR(1)"/>
+  </domain>
+  <domain UUID="Domain_N67NjTnZEemklKtfqIlTog" name="숫자" suggestedDataType="INTEGER">
+    <domain UUID="Domain_N67NjjnZEemklKtfqIlTog" name="금액"/>
+    <domain UUID="Domain_N67NjznZEemklKtfqIlTog" name="일련번호"/>
+  </domain>
+  <domain UUID="Domain_N67NkDnZEemklKtfqIlTog" name="날짜" suggestedDataType="DATE">
+    <domain UUID="Domain_N67NkTnZEemklKtfqIlTog" name="일시" suggestedDataType="DATETIME"/>
+  </domain>
+  <domain UUID="Domain_N67NkjnZEemklKtfqIlTog" name="객체" suggestedDataType="BLOB">
+    <domain UUID="Domain_N670kDnZEemklKtfqIlTog" name="이미지" suggestedDataType="LONG VARGRAPHIC"/>
+    <domain UUID="Domain_N670kTnZEemklKtfqIlTog" name="오디오" suggestedDataType="BLOB"/>
+  </domain>
+</e:DomainDefinition>
