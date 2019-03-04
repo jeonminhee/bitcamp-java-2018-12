@@ -4,11 +4,14 @@ drop table if exists lms_member;
 -- 게시판 테이블이 존재한다면 삭제
 drop table if exists lms_board;
 
+-- 수업 테이블이 존재한다면 삭제
+drop table if exists lms_lesson;
+
 -- 사진 게시판 테이블 삭제
 drop table if exists lms_photo;
 
--- 수업 테이블이 존재한다면 삭제
-drop table if exists lms_lesson;
+-- 사진 게시물 첨부 파일 테이블 삭제
+drop table if exists lms_photo_file;
 
 -- not null 컬럼을 앞에 세운다.
 -- 같은 not null이면 고정크기 컬럼을 앞에 세운다.

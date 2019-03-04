@@ -1,27 +1,11 @@
-// 7단계 : 사진 게시판 첨부 파일 추가
-//
+// 6단계 : 사진 게시판 추가
+
 // 작업
-// 1) PhotoFile 도메인 클래스 정의
-// 2) 사진 게시물 출력할 때 첨부파일도 함께 출력하기
-// 2.1) PhotoFileDao와 PhotoFileDaoImpl 정의
-//    - findByPhotoBoardno(int) 메서드 추가
-// 2.2) PhotoBoardDetailCommand 변경
-//    - PhotoFileDao 의존 객체 필드 추가
-// 2.3) ApplicationInitializer에 PhotoFileDao를 등록한다.
-// 3) 사진 게시물 입력할 때 첨부파일도 입력하기
-// 3.1) PhotoFileDao와 PhotoFileDaoImpl 정의
-//    - insert(PhotoFile) 메서드 추가
-// 3.2) PhotoBoardAddCommand 변경
-//    - 첨부파일 입력 추가
-// 3.3) ApplicationInitializer 변경
-//    - PhotoBoardAddCommand의 생성자에 PhotoFileDao 주입
-// 4) 사진 게시물 변경할 때 첨부파일도 변경하기
-// 4.1) PhotoFileDao와 PhotoFileDaoImpl 정의
-//    - deleteByPhotoBoardNo(int) 메서드 추가
-// 4.2) PhotoBoardAddCommand 변경
-//    - 첨부파일 입력 추가
-// 4.3) ApplicationInitializer 변경
-//    - PhotoBoardAddCommand의 생성자에 PhotoFileDao 주입
+// 1) PhotoBoard 도메인 클래스 정의
+// 2) PhotoBaordDao와 PhotoBoardDaoImpl 구현체 정의
+//    - findAll() 메서드 추가
+// 3) PhotoBoardListCommand 추가
+// 4) ApplicationInitializer에 PhotoBoardListCommand 등록한다.
 package com.eomcs.lms;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
