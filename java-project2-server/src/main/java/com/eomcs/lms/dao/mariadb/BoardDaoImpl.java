@@ -8,19 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
+import com.eomcs.util.DataSource;
 
 public class BoardDaoImpl implements BoardDao{
-
-  Connection con;
-
-  public BoardDaoImpl(Connection con) {
-    this.con = con;
+  
+  // DataSource 의존 객체 선언
+  DataSource dataSource;
+  
+  public BoardDaoImpl(DataSource dataSource) {
+    this.dataSource = dataSource;
   }
 
-
   public List<Board> findAll(){
+    Connection con = dataSource.getConnection();
     try (PreparedStatement stmt = con.prepareStatement("select board_id, conts, cdt, vw_cnt from lms_board"
-        + " order by board_id desc")) {
+            + " order by board_id desc")) {
 
       try (ResultSet rs = stmt.executeQuery()) {
 
@@ -42,12 +44,13 @@ public class BoardDaoImpl implements BoardDao{
   }
 
   public List<Board> findByKeyword(String keyword){
+    Connection con = dataSource.getConnection();
     try (PreparedStatement stmt = con.prepareStatement(
-        "select board_id, conts, cdt, vw_cnt from lms_board"
-        + " where conts like concat('%', ?, '%')"
-        + " or vw_cnt like concat(?)"
-        + " order by board_id asc")) {
-      
+            "select board_id, conts, cdt, vw_cnt from lms_board"
+                + " where conts like concat('%', ?, '%')"
+                + " or vw_cnt like concat(?)"
+                + " order by board_id asc")) {
+
       stmt.setString(1, keyword);
       stmt.setString(2, keyword);
 
@@ -71,10 +74,11 @@ public class BoardDaoImpl implements BoardDao{
   }
 
 
-  
+
   public void insert(Board board) {
+    Connection con = dataSource.getConnection();
     try (PreparedStatement stmt = con.prepareStatement(
-        "insert into lms_board(conts) values(?)")) {
+            "insert into lms_board(conts) values(?)")) {
 
       stmt.setString(1, board.getContents());
       stmt.executeUpdate();
@@ -85,6 +89,7 @@ public class BoardDaoImpl implements BoardDao{
   }
   public Board findByNo(int no) {
     try {
+      Connection con = dataSource.getConnection();
       try(PreparedStatement stmt = con.prepareStatement(
           "update lms_board set vw_cnt =  vw_cnt + 1 where board_id = ?")){
         stmt.setInt(1, no);
@@ -115,8 +120,9 @@ public class BoardDaoImpl implements BoardDao{
     }
   }
   public int update(Board board) {
+    Connection con = dataSource.getConnection();
     try (PreparedStatement stmt = con.prepareStatement(
-        "update lms_board set conts = ? where board_id = ?")) {
+            "update lms_board set conts = ? where board_id = ?")) {
 
       stmt.setString(1, board.getContents());
       stmt.setInt(2, board.getNo());
@@ -129,8 +135,9 @@ public class BoardDaoImpl implements BoardDao{
   }
 
   public int delete(int no) {
+    Connection con = dataSource.getConnection();
     try (PreparedStatement stmt = con.prepareStatement(
-        "delete from lms_board where board_id = ?")) {
+            "delete from lms_board where board_id = ?")) {
 
       stmt.setInt(1, no);
 
