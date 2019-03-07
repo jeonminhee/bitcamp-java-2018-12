@@ -11,48 +11,60 @@
 		<result column="created_date" property="createddate" />
 		<result column="view_count" property="viewcount" />
 	</resultMap>
+	
+	 <resultMap type="attachfile" id="attachFileMap">
+    <id column="board_file_id" property="no" />
+    <result column="file_path" property="filePath" />
+    <result column="board_id" property="boardNo" />
+  </resultMap>
 
-<!-- 여러 SQL문에서 반복적으로 사용하는 코드를 별도의 블록으로 분리시키기.
-     <sql> SQL 코드 조각</sql>문법을 사용한다. -->
-     <sql id="sql01">
-       select *
-       from x_board
-     </sql>
+  <resultMap type="board" id="boardAttachFileMap">
+    <id column="board_id" property="no" />
+    <result column="created_date" property="createddate" />
+    <result column="view_count" property="viewcount" />
+    
+    <!-- 자식 테이블의 데이터를 받을 필드 선언 -->
+    <result column="title" property="title" />
+    <result column="contents" property="contents" />
+            
+    <collection property="attachFiles" ofType="attachFile">
+      <id column="board_file_id" property="no"/>
+      <result column="file_path" property="filePath" />
+      <result column="boardNo" property="boardNo" />
+    </collection>
+  </resultMap>
 
-	<select id="select1" resultMap="boardMap" parameterType="int">
-  <include refid="sql01"/>
-		<if test="value != null"><!-- test 속성 안에선 okok 안된다. value라고 해야한다. -->
-		where
-		  board_id = #{okok} <!-- 값을 꺼낼 때는 프로퍼티 이름으로 아무거나 가능하다. -->
-		  </if>
+
+	<select id="selectBoard" resultMap="boardMap" parameterType="int">
+    select *
+    from x_board
+    where
+      board_id = #{value}
 	</select>
 	
-	<!-- 파라미터 타입이 자바 원시 타입, String, 래퍼 클래스가 아닌
-	     일반 클래스인 경우, 원래 했던 것 처럼 프로퍼티 이름을 사용하면 된다. -->
-	 <select id="select2" resultMap="boardMap" parameterType="map">
-    <include refid="sql01"/>
-    <if test="no != null">
+	 <select id="selectAttachFile" resultMap="attachFileMap" parameterType="int">
+    select *
+    from x_board_file
     where
-      board_id = #{no}
-      </if>
+      board_id = #{value}
   </select>
   
-  <!-- <where> 태그를 사용하면 굳이 임의의 조건을 where 절에 추가할 필요가 없다.
-  => 즉 위의 select3보다 편하게 처리할 수 있다.
-   -->
-   <select id="select3" resultMap="boardMap" parameterType="map">
-    <include refid="sql01"/>
-    <where>
-    <if test="no != null">
-      or board_id = #{no}
-      </if>
-    <if test="title != null">
-      or title like concat('%', #{title}, '%')
-      </if>
-    <if test="contents != null">
-      or contents like concat('%', #{contents}, '%')
-      </if>
-      </where>
+     <select id="selectBoardWithAttachFile" 
+             resultMap="boardAttachFileMap" 
+             parameterType="int">
+	 select
+		  b.board_id,
+		  b.title,
+		  b.contents,
+		  b.created_date,
+		  b.view_count,
+		  f.board_file_id,
+		  f.file_path,
+		  f.board_id as boardNo
+	  from x_board b
+	    left outer join x_board_file f on b.board_id = f.board_id
+	  where
+	    b.board_id = #{value}
   </select>
   
 </mapper>

@@ -1,8 +1,9 @@
 -- 게시판 테이블 삭제
-drop table x_board if exists x_board restrict;
+drop table if exists x_board restrict;
 
 -- 게시물 첨부파일 테이블 삭제
-drop table x_board_file if exists x_board_file restrict;
+drop table if exists x_board_file restrict;
+
 
 -- 게시판 테이블 생성
 create table x_board (
@@ -14,7 +15,7 @@ create table x_board (
 );
 
 -- 게시물 첨부파일 테이블 생성
-create table x_board_file(
+create table x_board_file (
   board_file_id int not null primary key auto_increment,
   file_path varchar(255) not null,
   board_id int not null,
@@ -52,6 +53,7 @@ insert into x_board_file(board_file_id, file_path, board_id)
 values(104, 'b1.gif', 2);
 insert into x_board_file(board_file_id, file_path, board_id) 
 values(105, 'b2.gif', 2);
+
 
 insert into x_board_file(board_file_id, file_path, board_id) 
 values(106, 'c1.gif', 3);
@@ -109,21 +111,8 @@ select
   f.file_path
 from x_board b
   left outer join x_board_file f on b.board_id = f.board_id
- where
+where
   b.board_id = 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

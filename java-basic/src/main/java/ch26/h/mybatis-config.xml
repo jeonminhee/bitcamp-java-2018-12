@@ -4,10 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	<properties resource="ch26/g/jdbc.properties" />
+	<properties resource="ch26/h/jdbc.properties" />
 
 	<typeAliases>
-		<package name="ch26.g" />
+		<package name="ch26.h" />
 	</typeAliases>
 
 	<environments default="development">
@@ -23,6 +23,6 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="ch26/g/BoardMapper.xml" />
+		<mapper resource="ch26/h/BoardMapper.xml" />
 	</mappers>
 </configuration>
