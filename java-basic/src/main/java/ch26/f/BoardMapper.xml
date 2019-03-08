@@ -178,7 +178,7 @@
       <if test="contents != null"> contents = #{contents}</if>
     </set>
       where
-        board_id = #{no}
+        board_id = #{value}
   </update>
   
   <!-- Array 또는 Iterable 객체를 사용하여 값을 반복적으로 꺼내기 -->
