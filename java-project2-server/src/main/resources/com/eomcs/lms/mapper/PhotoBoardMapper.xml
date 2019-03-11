@@ -35,24 +35,8 @@
 </collection>
 </resultMap>
 
-  <select id="findAll" resultMap="photoBoardMap" parameterType="map">
-    select
-	    photo_id,
-	    titl,
-	    cdt,
-	    vw_cnt,
-      lesson_id
-    from
-      lms_photo
-      <where>
-      <if test="lessonNo != null"> lesson_id=#{lessonNo}</if>
-      </where>
-    order by
-      photo_id desc
-  </select>
-  
-  <select id="findByNo" resultMap="photoBoardMap" parameterType="int">
-    select
+<sql id="select1">
+      select
       photo_id,
       titl,
       cdt,
@@ -60,6 +44,23 @@
       lesson_id
     from
       lms_photo
+</sql>
+
+  <select id="findAll" resultMap="photoBoardMap" parameterType="map">
+  <if test="keyword != null">
+  <bind name="pattern1" value="'%' + keyword + '%'"/>
+  </if>
+    <include refid="select1"></include>
+      <where>
+      <if test="lessonNo != null">or lesson_id=#{lessonNo}</if>
+      <if test="pattern1 != null">or titl like #{pattern1}</if>
+      </where>
+    order by
+      photo_id desc
+  </select>
+  
+  <select id="findByNo" resultMap="photoBoardMap" parameterType="int">
+    <include refid="select1"></include>
     where
       photo_id = #{value}
   </select>

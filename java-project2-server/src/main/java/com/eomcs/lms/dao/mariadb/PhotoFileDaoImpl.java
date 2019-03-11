@@ -22,9 +22,9 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
   }
 
   @Override
-  public void insert(PhotoFile photoFile) {
+  public void insert(List<PhotoFile> photoFiles) {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-      sqlSession.insert("PhotoFileMapper.insert", photoFile);
+      sqlSession.insert("PhotoFileMapper.insert", photoFiles);
     }
   }
 

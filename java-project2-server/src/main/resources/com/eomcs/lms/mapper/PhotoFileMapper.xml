@@ -24,10 +24,13 @@
       photo_file_id asc
   </select>
   
-  <insert id="insert" parameterType="photoFile">
+  <insert id="insert" parameterType="list">
 	  insert into
 	   lms_photo_file(file_path, photo_id)
-	   values(#{filePath},#{photoBoardNo})
+	   values
+	   <foreach collection="list" item ="photoFile" separator=",">
+	   (#{photoFile.filePath}, #{photoFile.photoBoardNo})
+     </foreach>
   </insert> 
   
   <delete id="deleteByPhotoBoardNo" parameterType="int">

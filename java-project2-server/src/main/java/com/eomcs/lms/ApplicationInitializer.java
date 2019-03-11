@@ -33,6 +33,7 @@ import com.eomcs.lms.handler.PhotoBoardAddCommand;
 import com.eomcs.lms.handler.PhotoBoardDeleteCommand;
 import com.eomcs.lms.handler.PhotoBoardDetailCommand;
 import com.eomcs.lms.handler.PhotoBoardListCommand;
+import com.eomcs.lms.handler.PhotoBoardSearchCommand;
 import com.eomcs.lms.handler.PhotoBoardUpdateCommand;
 import com.eomcs.mybatis.SqlSessionFactoryProxy;
 import com.eomcs.mybatis.TransactionManager;
@@ -86,6 +87,7 @@ public class ApplicationInitializer implements ApplicationContextListener{
 
       context.put("/photoboard/add", new PhotoBoardAddCommand(photoBoardDao, photoFileDao, txManager));
       context.put("/photoboard/list", new PhotoBoardListCommand(photoBoardDao));
+      context.put("/photoboard/search", new PhotoBoardSearchCommand(photoBoardDao));
       context.put("/photoboard/detail", new PhotoBoardDetailCommand(photoBoardDao, photoFileDao));
       context.put("/photoboard/update", new PhotoBoardUpdateCommand(photoBoardDao, photoFileDao, txManager));
       context.put("/photoboard/delete", new PhotoBoardDeleteCommand(photoBoardDao, photoFileDao, txManager));
