@@ -10,20 +10,21 @@ import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.util.ConnectionFactory;
 
 public class PhotoFileDaoImpl implements PhotoFileDao {
-  
+
   @Override
-  public List<PhotoFile> findByPhotoBoardNo(int photoBoardNo){
+  public List<PhotoFile> findByPhotoBoardNo(int photoBoardNo) {
     try (Connection con = ConnectionFactory.create();
-        PreparedStatement stmt = con.prepareStatement("select photo_file_id, file_path, photo_id"
+        PreparedStatement stmt = con.prepareStatement(
+        "select photo_file_id, photo_id, file_path"
         + " from lms_photo_file"
-        + " where photo_id = ?"
+        + " where photo_id = ? "
         + " order by photo_file_id asc")) {
 
       stmt.setInt(1, photoBoardNo); // 특정 사진 게시물에 대해 첨부파일을 가져오기
       
       try (ResultSet rs = stmt.executeQuery()) {
 
-        List<PhotoFile> list = new ArrayList<>();
+        ArrayList<PhotoFile> list = new ArrayList<>();
         while (rs.next()) {
           PhotoFile photoFile = new PhotoFile();
           photoFile.setNo(rs.getInt("photo_file_id"));
@@ -43,7 +44,7 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
   public void insert(PhotoFile photoFile) {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
-        "insert into lms_photo_file(file_path, photo_id) values(?,?)")) {
+        "insert into lms_photo_file(file_path,photo_id) values(?,?)")) {
 
       stmt.setString(1, photoFile.getFilePath());
       stmt.setInt(2, photoFile.getPhotoBoardNo());
@@ -54,6 +55,7 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
     }
   }
 
+  @Override
   public int deleteByPhotoBoardNo(int photoBoardNo) {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
@@ -62,6 +64,7 @@ public class PhotoFileDaoImpl implements PhotoFileDao {
       stmt.setInt(1, photoBoardNo);
 
       return stmt.executeUpdate();
+      
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

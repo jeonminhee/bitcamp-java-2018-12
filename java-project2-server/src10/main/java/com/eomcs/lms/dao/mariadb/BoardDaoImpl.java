@@ -1,4 +1,3 @@
-// DBMS 적용
 package com.eomcs.lms.dao.mariadb;
 
 import java.sql.Connection;
@@ -10,20 +9,21 @@ import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.util.ConnectionFactory;
 
-public class BoardDaoImpl implements BoardDao{
+public class BoardDaoImpl implements BoardDao {
 
-  public List<Board> findAll(){
+  public List<Board> findAll() {
     try (Connection con = ConnectionFactory.create();
-        PreparedStatement stmt = con.prepareStatement("select board_id, conts, cdt, vw_cnt from lms_board"
+        PreparedStatement stmt = con.prepareStatement(
+        "select board_id, conts, cdt, vw_cnt from lms_board"
             + " order by board_id desc")) {
 
       try (ResultSet rs = stmt.executeQuery()) {
 
-        List<Board> list = new ArrayList<>();
+        ArrayList<Board> list = new ArrayList<>();
         while (rs.next()) {
           Board board = new Board();
           board.setNo(rs.getInt("board_id"));
-          board.setContents(rs.getString("conts")); 
+          board.setContents(rs.getString("conts"));
           board.setCreatedDate(rs.getDate("cdt"));
           board.setViewCount(rs.getInt("vw_cnt"));
 
@@ -35,57 +35,26 @@ public class BoardDaoImpl implements BoardDao{
       throw new RuntimeException(e);
     }
   }
-
-  public List<Board> findByKeyword(String keyword){
-    try (Connection con = ConnectionFactory.create();
-        PreparedStatement stmt = con.prepareStatement(
-            "select board_id, conts, cdt, vw_cnt from lms_board"
-                + " where conts like concat('%', ?, '%')"
-                + " or vw_cnt like concat(?)"
-                + " order by board_id asc")) {
-
-      stmt.setString(1, keyword);
-      stmt.setString(2, keyword);
-
-      try (ResultSet rs = stmt.executeQuery()) {
-
-        List<Board> list = new ArrayList<>();
-        while (rs.next()) {
-          Board board = new Board();
-          board.setNo(rs.getInt("board_id"));
-          board.setContents(rs.getString("conts")); 
-          board.setCreatedDate(rs.getDate("cdt"));
-          board.setViewCount(rs.getInt("vw_cnt"));
-
-          list.add(board);
-        }
-        return list;
-      }
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-
 
   public void insert(Board board) {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
-            "insert into lms_board(conts) values(?)")) {
+        "insert into lms_board(conts) values(?)")) {
 
       stmt.setString(1, board.getContents());
       stmt.executeUpdate();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
-
   }
+
   public Board findByNo(int no) {
-    try (Connection con = ConnectionFactory.create()) {
-      try(PreparedStatement stmt = con.prepareStatement(
-          "update lms_board set vw_cnt =  vw_cnt + 1 where board_id = ?")){
+    try (Connection con = ConnectionFactory.create();){
+      // 조회수 증가시키기
+      try (PreparedStatement stmt = con.prepareStatement(
+          "update lms_board set vw_cnt = vw_cnt + 1 where board_id = ?")) {
         stmt.setInt(1, no);
-        stmt.executeUpdate(); //조회수 증가
+        stmt.executeUpdate();
       }
 
       try (PreparedStatement stmt = con.prepareStatement(
@@ -104,23 +73,23 @@ public class BoardDaoImpl implements BoardDao{
             return board;
           } else {
             return null;
-          } 
+          }
         }
       }
-    }catch (Exception e) {
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
+
   public int update(Board board) {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
-            "update lms_board set conts = ? where board_id = ?")) {
+        "update lms_board set conts = ? where board_id = ?")) {
 
       stmt.setString(1, board.getContents());
       stmt.setInt(2, board.getNo());
 
       return stmt.executeUpdate();
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -129,7 +98,7 @@ public class BoardDaoImpl implements BoardDao{
   public int delete(int no) {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
-            "delete from lms_board where board_id = ?")) {
+        "delete from lms_board where board_id = ?")) {
 
       stmt.setInt(1, no);
 
@@ -138,14 +107,7 @@ public class BoardDaoImpl implements BoardDao{
       throw new RuntimeException(e);
     }
   }
-
 }
-
-
-
-
-
-
 
 
 

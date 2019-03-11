@@ -1,7 +1,6 @@
 package com.eomcs.lms.context;
 
 public class ApplicationContextException extends RuntimeException {
-
   private static final long serialVersionUID = 1L;
 
   public ApplicationContextException() {

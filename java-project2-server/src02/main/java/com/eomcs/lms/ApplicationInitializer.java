@@ -26,11 +26,11 @@ import com.eomcs.lms.handler.MemberListCommand;
 import com.eomcs.lms.handler.MemberUpdateCommand;
 
 // App 객체의 상태가 변경될 때 마다 보고 받는 옵저버가 되려면 
-// ApplicationcontextListener 규격에 따라 작성해야한다.
-public class ApplicationInitializer implements ApplicationContextListener{
-  
-  Connection con;
+// ApplicationContextListener 규격에 따라 작성해야 한다.
+public class ApplicationInitializer implements ApplicationContextListener {
 
+  Connection con;
+  
   @Override
   public void contextInitialized(Map<String, Object> context) {
     try {
@@ -45,11 +45,13 @@ public class ApplicationInitializer implements ApplicationContextListener{
       
       // Command 객체 준비
       Scanner keyboard = (Scanner) context.get("keyboard");
+      
       context.put("/lesson/add", new LessonAddCommand(keyboard, lessonDao));
       context.put("/lesson/list", new LessonListCommand(keyboard, lessonDao));
       context.put("/lesson/detail", new LessonDetailCommand(keyboard, lessonDao));
       context.put("/lesson/update", new LessonUpdateCommand(keyboard, lessonDao));
       context.put("/lesson/delete", new LessonDeleteCommand(keyboard, lessonDao));
+
       
       context.put("/member/add", new MemberAddCommand(keyboard, memberDao));
       context.put("/member/list", new MemberListCommand(memberDao));
@@ -62,21 +64,25 @@ public class ApplicationInitializer implements ApplicationContextListener{
       context.put("/board/detail", new BoardDetailCommand(keyboard, boardDao));
       context.put("/board/update", new BoardUpdateCommand(keyboard, boardDao));
       context.put("/board/delete", new BoardDeleteCommand(keyboard, boardDao));
-
+      
     } catch (Exception e) {
       throw new ApplicationContextException(e);
     }
   }
 
   @Override
-  public void contextDestroted(Map<String, Object> context) {
+  public void contextDestroyed(Map<String, Object> context) {
     try {
       // 애플리케이션이 종료될 때 DBMS와의 연결을 끊는다.
       con.close();
     } catch (Exception e) {
       throw new ApplicationContextException(e);
-    }
-    
+    }   
   }
-
 }
+
+
+
+
+
+

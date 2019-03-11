@@ -6,7 +6,7 @@ import com.eomcs.lms.domain.Board;
 public class BoardDetailCommand implements Command {
   
   Scanner keyboard;
-  BoardDao boardDao; // 서버의 BoardDaoImpl 객체를 대행하는 프록시 객체이다.
+  BoardDao boardDao;
   
   public BoardDetailCommand(Scanner keyboard, BoardDao boardDao) {
     this.keyboard = keyboard;
@@ -20,8 +20,8 @@ public class BoardDetailCommand implements Command {
     
     try {
       Board board = boardDao.findByNo(no);
-      if(board == null) {
-        System.out.println("해당 번호에 게시물이 없습니다.");
+      if (board == null) {
+        System.out.println("해당 번호의 게시물이 없습니다.");
         return;
       }
       System.out.printf("내용: %s\n", board.getContents());

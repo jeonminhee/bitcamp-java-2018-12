@@ -5,7 +5,7 @@ import com.eomcs.lms.dao.BoardDao;
 public class BoardDeleteCommand implements Command {
   
   Scanner keyboard;
-  BoardDao boardDao; // 서버의 BoardDaoImpl 객체를 대행하는 프록시 객체이다.
+  BoardDao boardDao;
   
   public BoardDeleteCommand(Scanner keyboard, BoardDao boardDao) {
     this.keyboard = keyboard;
@@ -18,8 +18,9 @@ public class BoardDeleteCommand implements Command {
     int no = Integer.parseInt(keyboard.nextLine());
 
     try {
-      if(boardDao.delete(no) == 0) {
+      if (boardDao.delete(no) == 0) {
         System.out.println("해당 번호의 게시물이 없습니다.");
+        return;
       }
       System.out.println("삭제했습니다.");
       

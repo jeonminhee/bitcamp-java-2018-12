@@ -4,22 +4,22 @@ import com.eomcs.lms.domain.PhotoBoard;
 
 public class PhotoBoardAddCommand extends AbstractCommand {
   
-  PhotoBoardDao photoBoardDao; // 서버의 BoardDaoImpl 객체를 대행하는 프록시 객체이다.
+  PhotoBoardDao photoBoardDao; 
   
   public PhotoBoardAddCommand(PhotoBoardDao photoBoardDao) {
     this.photoBoardDao = photoBoardDao;
   }
   
   @Override
-  public void execute(Response response) throws Exception{
+  public void execute(Response response) throws Exception {
+    PhotoBoard board = new PhotoBoard();
+    board.setTitle(response.requestString("제목?"));
+    board.setLessonNo(response.requestInt("수업?"));
+    photoBoardDao.insert(board);
     
-      
-      PhotoBoard board = new PhotoBoard();
-      board.setTitle(response.requestString("제목? "));
-      board.setLessonNo(response.requestInt("수업? "));
-      photoBoardDao.insert(board);
-      
-      response.println("사진을 저장하였습니다.");
-      
+    response.println("저장하였습니다.");
   }
 }
+
+
+

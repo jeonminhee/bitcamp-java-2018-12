@@ -1,3 +1,4 @@
+// DBMS 적용
 package com.eomcs.lms.dao.mariadb;
 
 import java.sql.Connection;
@@ -9,51 +10,13 @@ import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.util.ConnectionFactory;
 
-public class MemberDaoImpl implements MemberDao{
+public class MemberDaoImpl implements MemberDao {
 
   public List<Member> findAll() {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
-        "select member_id, name, email, pwd, cdt, tel, photo from lms_member"
-            + " order by member_id desc")) {
-
-      try (ResultSet rs = stmt.executeQuery()) {
-
-        List<Member> list = new ArrayList<>();
-
-        while (rs.next()) {
-          Member member = new Member();
-          member.setNo(rs.getInt("member_id"));
-          member.setName(rs.getString("name"));
-          member.setEmail(rs.getString("email"));
-          member.setPassword(rs.getString("pwd"));
-          member.setRegisteredDate(rs.getDate("cdt"));
-          member.setTel(rs.getString("tel"));
-          member.setPhoto(rs.getString("photo"));
-
-          list.add(member);
-
-        }
-        return list;
-      }
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  
-  public List<Member> findByKeyword(String keyword) {
-    try (Connection con = ConnectionFactory.create();
-        PreparedStatement stmt = con.prepareStatement(
-        "select member_id, name, email, pwd, cdt, tel, photo from lms_member"
-        + " where name like concat('%', ?, '%')"
-            + " or email like concat('%', ?, '%')"
-            + " or tel like concat('%', ?, '%')"
+        "select member_id, name, email, tel from lms_member"
             + " order by name asc")) {
-      
-      stmt.setString(1, keyword);
-      stmt.setString(2, keyword);
-      stmt.setString(3, keyword);
 
       try (ResultSet rs = stmt.executeQuery()) {
 
@@ -63,13 +26,9 @@ public class MemberDaoImpl implements MemberDao{
           member.setNo(rs.getInt("member_id"));
           member.setName(rs.getString("name"));
           member.setEmail(rs.getString("email"));
-          member.setPassword(rs.getString("pwd"));
-          member.setRegisteredDate(rs.getDate("cdt"));
           member.setTel(rs.getString("tel"));
-          member.setPhoto(rs.getString("photo"));
 
           list.add(member);
-
         }
         return list;
       }
@@ -78,19 +37,52 @@ public class MemberDaoImpl implements MemberDao{
     }
   }
   
+  @Override
+  public List<Member> findByKeyword(String keyword) {
+    try (Connection con = ConnectionFactory.create();
+        PreparedStatement stmt = con.prepareStatement(
+        "select member_id, name, email, tel from lms_member"
+        + " where name like concat('%', ?, '%')"
+        + " or email like concat('%', ?, '%')"
+        + " or tel like concat('%', ?, '%')"
+        + " order by name asc")) {
+
+      stmt.setString(1, keyword);
+      stmt.setString(2, keyword);
+      stmt.setString(3, keyword);
+      
+      try (ResultSet rs = stmt.executeQuery()) {
+
+        ArrayList<Member> list = new ArrayList<>();
+        while (rs.next()) {
+          Member member = new Member();
+          member.setNo(rs.getInt("member_id"));
+          member.setName(rs.getString("name"));
+          member.setEmail(rs.getString("email"));
+          member.setTel(rs.getString("tel"));
+
+          list.add(member);
+        }
+        return list;
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public void insert(Member member) {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
-        "insert into lms_member(name, email, pwd, photo, tel)" 
-            + " values(?, ?, password(?), ?, ?)")) {
+        "insert into lms_member(name,email,pwd,tel,photo)"
+            + " values(?,?,password(?),?,?)")) {
 
       stmt.setString(1, member.getName());
       stmt.setString(2, member.getEmail());
       stmt.setString(3, member.getPassword());
-      stmt.setString(4, member.getPhoto());
-      stmt.setString(5, member.getTel());
-      stmt.executeUpdate();
+      stmt.setString(4, member.getTel());
+      stmt.setString(5, member.getPhoto());
 
+      stmt.executeUpdate();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -99,8 +91,9 @@ public class MemberDaoImpl implements MemberDao{
   public Member findByNo(int no) {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
-        "select member_id, name, email, photo, tel, cdt" 
-            + " from lms_member where member_id = ? ")) {
+        "select member_id, name, email, cdt, tel, photo"
+            + " from lms_member"
+            + " where member_id = ?")) {
 
       stmt.setInt(1, no);
 
@@ -111,9 +104,11 @@ public class MemberDaoImpl implements MemberDao{
           member.setNo(rs.getInt("member_id"));
           member.setName(rs.getString("name"));
           member.setEmail(rs.getString("email"));
-          member.setPhoto(rs.getString("photo"));
           member.setRegisteredDate(rs.getDate("cdt"));
+          member.setTel(rs.getString("tel"));
+          member.setPhoto(rs.getString("photo"));
           return member;
+
         } else {
           return null;
         }
@@ -122,25 +117,33 @@ public class MemberDaoImpl implements MemberDao{
       throw new RuntimeException(e);
     }
   }
+
   public int update(Member member) {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
-        "update lms_member set name = ?, email = ?, pwd = password(?), photo = ?, tel = ?"
+        "update lms_member set"
+            + " name = ?,"
+            + " email = ?,"
+            + " pwd = password(?),"
+            + " cdt = ?,"
+            + " tel = ?,"
+            + " photo = ?"
             + " where member_id = ?")) {
 
       stmt.setString(1, member.getName());
       stmt.setString(2, member.getEmail());
       stmt.setString(3, member.getPassword());
-      stmt.setString(4, member.getPhoto());
+      stmt.setDate(4, member.getRegisteredDate());
       stmt.setString(5, member.getTel());
-      stmt.setInt(6, member.getNo());
+      stmt.setString(6, member.getPhoto());
+      stmt.setInt(7, member.getNo());
 
       return stmt.executeUpdate();
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
+
   public int delete(int no) {
     try (Connection con = ConnectionFactory.create();
         PreparedStatement stmt = con.prepareStatement(
@@ -149,17 +152,11 @@ public class MemberDaoImpl implements MemberDao{
       stmt.setInt(1, no);
 
       return stmt.executeUpdate();
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 }
-
-
-
-
-
 
 
 

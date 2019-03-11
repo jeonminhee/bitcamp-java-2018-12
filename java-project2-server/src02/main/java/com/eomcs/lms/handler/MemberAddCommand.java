@@ -31,13 +31,13 @@ public class MemberAddCommand implements Command {
   
     System.out.print("전화? ");
     member.setTel(keyboard.nextLine());
-    
+  
     try {
       memberDao.insert(member);
       System.out.println("저장하였습니다.");
+      
     } catch (Exception e) {
-      System.out.printf("게시글 저장 오류 : %s\n", e.getMessage());
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
     }
-    
   }
 }
