@@ -6,11 +6,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.eomcs.lms.context.ApplicationContextException;
 import com.eomcs.lms.context.ApplicationContextListener;
-import com.eomcs.lms.dao.mariadb.BoardDaoImpl;
-import com.eomcs.lms.dao.mariadb.LessonDaoImpl;
-import com.eomcs.lms.dao.mariadb.MemberDaoImpl;
-import com.eomcs.lms.dao.mariadb.PhotoBoardDaoImpl;
-import com.eomcs.lms.dao.mariadb.PhotoFileDaoImpl;
+import com.eomcs.lms.dao.BoardDao;
+import com.eomcs.lms.dao.LessonDao;
+import com.eomcs.lms.dao.MemberDao;
+import com.eomcs.lms.dao.PhotoBoardDao;
+import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.handler.BoardAddCommand;
 import com.eomcs.lms.handler.BoardDeleteCommand;
 import com.eomcs.lms.handler.BoardDetailCommand;
@@ -35,6 +35,7 @@ import com.eomcs.lms.handler.PhotoBoardDetailCommand;
 import com.eomcs.lms.handler.PhotoBoardListCommand;
 import com.eomcs.lms.handler.PhotoBoardSearchCommand;
 import com.eomcs.lms.handler.PhotoBoardUpdateCommand;
+import com.eomcs.mybatis.DaoFactory;
 import com.eomcs.mybatis.SqlSessionFactoryProxy;
 import com.eomcs.mybatis.TransactionManager;
 
@@ -54,13 +55,15 @@ public class ApplicationInitializer implements ApplicationContextListener{
       
       TransactionManager txManager = new TransactionManager(sqlSessionFactoryProxy);
       
-      // DAO 객체 준비
-      LessonDaoImpl lessonDao = new LessonDaoImpl(sqlSessionFactoryProxy);
-      MemberDaoImpl memberDao = new MemberDaoImpl(sqlSessionFactoryProxy);
-      BoardDaoImpl boardDao = new BoardDaoImpl(sqlSessionFactoryProxy);
-      PhotoBoardDaoImpl photoBoardDao = new PhotoBoardDaoImpl(sqlSessionFactoryProxy);
-      PhotoFileDaoImpl photoFileDao = new PhotoFileDaoImpl(sqlSessionFactoryProxy);
-
+      // DAO 인터페이스의 구현체를 자동으로 생성하기
+      DaoFactory daoFactory = new DaoFactory(sqlSessionFactoryProxy);
+      
+      BoardDao boardDao = daoFactory.create(BoardDao.class);
+      LessonDao lessonDao = daoFactory.create(LessonDao.class);
+      MemberDao memberDao = daoFactory.create(MemberDao.class);
+      PhotoBoardDao photoBoardDao = daoFactory.create(PhotoBoardDao.class);
+      PhotoFileDao photoFileDao = daoFactory.create(PhotoFileDao.class);
+      
       // Command 객체 준비
       context.put("/lesson/add", new LessonAddCommand(lessonDao));
       context.put("/lesson/list", new LessonListCommand(lessonDao));

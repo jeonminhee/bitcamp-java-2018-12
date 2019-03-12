@@ -5,10 +5,11 @@ import com.eomcs.lms.domain.Board;
 
 public interface BoardDao {
 
-  void insert(Board board);
+  int insert(Board board);
   List<Board> findAll();
-  public List<Board> findByKeyword(String keyword);
+  List<Board> findByKeyword(String keyword);
   Board findByNo(int no);
+  int increaseCount(int no);
   int update(Board board);
   int delete(int no);
 }

@@ -6,12 +6,12 @@ import com.eomcs.lms.domain.Lesson;
 
 public interface LessonDao {
   
-  public void insert(Lesson lesson);
-  public List<Lesson> findAll();
-  public List<Lesson> findByKeyword(String keyword);
-  public Lesson findByNo(int no);
-  public int update(Lesson lesson);
-  public int delete(int no);
+  int insert(Lesson lesson);
+  List<Lesson> findAll();
+  List<Lesson> findByKeyword(String keyword);
+  Lesson findByNo(int no);
+  int update(Lesson lesson);
+  int delete(int no);
 
 }
 

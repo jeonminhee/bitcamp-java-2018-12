@@ -4,7 +4,6 @@ import java.util.List;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
-import com.eomcs.lms.dao.mariadb.LessonDaoImpl;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.mybatis.TransactionManager;
 
@@ -15,7 +14,7 @@ public class LessonDeleteCommand extends AbstractCommand {
   PhotoBoardDao photoBoardDao;
   PhotoFileDao  photoFileDao;
 
-  public LessonDeleteCommand(LessonDaoImpl lessonDao, 
+  public LessonDeleteCommand(LessonDao lessonDao, 
       PhotoBoardDao photoBoardDao, PhotoFileDao  photoFileDao, TransactionManager txManager) {
     this.txManager = txManager;
     this.lessonDao = lessonDao;

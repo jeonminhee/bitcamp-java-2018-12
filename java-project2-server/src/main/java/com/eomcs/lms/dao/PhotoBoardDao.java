@@ -6,8 +6,9 @@ import com.eomcs.lms.domain.PhotoBoard;
 
 public interface PhotoBoardDao {
   
-  void insert(PhotoBoard photoBoard);
+  int insert(PhotoBoard photoBoard);
   List<PhotoBoard> findAll(Map<String, Object> params);
+  int increaseCount(int no);
   PhotoBoard findByNo(int no);
   PhotoBoard findByNoWithFile(int no);
   int update(PhotoBoard photoBoard);

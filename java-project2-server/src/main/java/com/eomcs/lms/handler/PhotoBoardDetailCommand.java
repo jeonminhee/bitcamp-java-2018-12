@@ -31,6 +31,8 @@ public class PhotoBoardDetailCommand extends AbstractCommand {
         return;
       }
       
+      photoBoardDao.increaseCount(no); // 조회수 증가
+      
       response.println(String.format("내용: %s", board.getTitle()));
       response.println(String.format("작성일: %s", board.getCreatedDate()));
       response.println(String.format("조회수: %d", board.getViewCount()));
