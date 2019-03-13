@@ -7,6 +7,7 @@ public class LessonDetailCommand extends AbstractCommand {
   LessonDao lessonDao;
   public LessonDetailCommand(LessonDao lessonDao) {
     this.lessonDao = lessonDao;
+    this.name = "/lesson/detail";
   }
 
   @Override

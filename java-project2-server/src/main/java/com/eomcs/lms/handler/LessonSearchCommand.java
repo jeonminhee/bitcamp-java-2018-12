@@ -10,6 +10,7 @@ public class LessonSearchCommand extends AbstractCommand {
 
   public LessonSearchCommand(LessonDao lessonDao) {
     this.lessonDao = lessonDao;
+    this.name = "/lesson/search";
   }
 
   @Override

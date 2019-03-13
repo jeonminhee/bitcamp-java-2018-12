@@ -20,6 +20,7 @@ public class LessonDeleteCommand extends AbstractCommand {
     this.lessonDao = lessonDao;
     this.photoBoardDao = photoBoardDao;
     this.photoFileDao = photoFileDao;
+    this.name = "/lesson/delete";
   }
 
   @Override

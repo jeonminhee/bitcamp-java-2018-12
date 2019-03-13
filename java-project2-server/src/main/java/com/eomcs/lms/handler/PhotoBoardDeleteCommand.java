@@ -13,6 +13,7 @@ public class PhotoBoardDeleteCommand extends AbstractCommand {
     this.txManager = txManager;
     this.photoBoardDao = photoBoardDao;
     this.photoFileDao = photoFileDao;
+    this.name = "/photoboard/delete";
   }
 
   @Override

@@ -9,6 +9,7 @@ public class BoardSearchCommand extends AbstractCommand {
   
   public BoardSearchCommand(BoardDao boarddao) {
     this.boarddao = boarddao;
+    this.name = "/board/search";
   }
 
   @Override
