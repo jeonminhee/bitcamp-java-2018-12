@@ -44,7 +44,7 @@ public class ApplicationContext {
 
     // 4) 인스턴스 생성을 완료한 후 작업을 수행
     postProcess();
-
+    
     // 저장소에 보관된 객체의 이름과 클래스명을 출력한다.
     System.out.println("-------------------------------");
     Set<String> names = beanContainer.keySet();
@@ -71,7 +71,6 @@ public class ApplicationContext {
   private void findClasses(File dir, String packageName) throws Exception {
     // 디렉토리를 뒤져서 클래스 파일(.class)이나 하위 디렉토리 목록을 알아낸다.
     File[] files = dir.listFiles((File pathname) -> {
-
       if (pathname.isDirectory())
         return true;
 
@@ -83,7 +82,6 @@ public class ApplicationContext {
     });
 
     for (File f : files) {
-
       if (f.isFile()) {
         // 클래스 파일일 경우,
         // => 파라미터로 받은 패키지 명과 파일 이름을 합쳐서 클래스 이름을 만든다.
@@ -127,7 +125,7 @@ public class ApplicationContext {
       }
       // Component 애노테이션이 붙은 클래스에 대해 인스턴스를 생성한다.
       Object obj = createInstance(clazz);
-
+      
       if (obj != null) { // 제대로 생성했으면 빈컨테이너에 저장한다.
         // 빈컨테이너에 객체를 저장할 때 key 값은 Component 애노테이션의 value() 값으로 한다.
         // 만약 value가 빈 문자열이라면 클래스 이름을 사용한다.
@@ -191,12 +189,12 @@ public class ApplicationContext {
     }
     return null;
   }
-
+  
   // bean 생성을 완료한 후 작업 수행
   public void postProcess() {
     // RequestMappingHandler 정보를 관리할 객체 생성
     RequestMappingHandlerMapping handlerMapping = new RequestMappingHandlerMapping();
-
+    
     // 빈 컨테이너에서 객체를 모두 꺼낸다.
     Collection<Object> beans = beanContainer.values();
     for(Object bean : beans) {
@@ -207,16 +205,16 @@ public class ApplicationContext {
         if(requestMapping == null) {
           continue;
         }
-
+        
         // RequestMapping이 붙은 메서드를 찾았으면 그 정보를 RequestMappingHandler에 담는다.
         RequestMappingHandler handler = new RequestMappingHandler(bean, m);
-
+        
         // 그리고 이 요청을 처리하는 핸들러(RequestMapping 애노테이션이 붙은 메서드)를 저장한다.
         handlerMapping.add(requestMapping.value(), handler);
-
+        
       }
     }
-
+    
     // ServerApp에서 꺼낼 수 있도록 RequestMappingHandlerMapping객체를 빈 컨테이너에 저장해둔다.
     beanContainer.put("handlerMapping", handlerMapping);
   }
