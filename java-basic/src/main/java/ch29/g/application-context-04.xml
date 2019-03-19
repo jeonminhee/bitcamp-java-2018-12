@@ -6,8 +6,8 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
         
         
-  <!-- String 값을 
-   -->
+  <!-- String 값을 BlackBox 객체로 자동 변환시키기 
+  -->
    
 	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
 	    <property name="customEditors">
