@@ -6,9 +6,6 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
         
         
-  <!-- String 값을 
-   -->
-   
 	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
 	    <property name="customEditors">
 	       <map>
