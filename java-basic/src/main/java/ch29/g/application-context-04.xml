@@ -6,6 +6,12 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
         
         
+<<<<<<< HEAD
+=======
+  <!-- String 값을 BlackBox 객체로 자동 변환시키기 
+  -->
+   
+>>>>>>> e14e79854a28070deb581eea3cdf0339c60af10a
 	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
 	    <property name="customEditors">
 	       <map>
