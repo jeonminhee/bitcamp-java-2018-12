@@ -1,5 +1,5 @@
-// AOP 사용 전 - X.m1()에 기능을 추가하기 전
-package ch30.a;
+// AOP 사용 - 기능 추가의 위치
+package ch30.d;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -7,9 +7,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Test01 {
 
   public static void main(String[] args) {
-
+    
     ApplicationContext iocContainer
-      = new ClassPathXmlApplicationContext("ch30/a/application-context-01.xml");
+      = new ClassPathXmlApplicationContext("ch30/d/application-context-01.xml");
 
     System.out.println("-------------------------------------------------------------------------------");
     
@@ -21,7 +21,11 @@ public class Test01 {
     
     System.out.println("-------------------------------------------------------------------------------");
 
-    X x = (X)iocContainer.getBean("x");
-    x.m1();
+    X x = (X) iocContainer.getBean("x");
+    System.out.println(x.calculate(10, 20, "+"));
+    
+    System.out.println(x.calculate(10, 20, "%"));
+    
+    
   }
 }

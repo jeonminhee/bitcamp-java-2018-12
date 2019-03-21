@@ -2,22 +2,22 @@ package com.eomcs.lms.handler;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import com.eomcs.lms.context.RequestMapping;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
-import com.eomcs.lms.service.MemberService;
 
 @Component
 public class MemberCommand {
 
-  MemberService memberService;
+  MemberDao memberDao;
 
-  public MemberCommand(MemberService memberService) {
-    this.memberService = memberService;
+  public MemberCommand(MemberDao memberDao) {
+    this.memberDao = memberDao;
   }
 
   @RequestMapping("/member/list")
   public void list(Response response) throws Exception {
 
-    List<Member> members = memberService.list();
+    List<Member> members = memberDao.findAll();
     for (Member member : members) {
       response.println(String.format("%3d, %-4s, %-20s, %-15s, %s", 
           member.getNo(), member.getName(), 
@@ -40,7 +40,7 @@ public class MemberCommand {
 
     member.setTel(response.requestString("전화? "));
 
-    memberService.add(member);
+    memberDao.insert(member);
     response.println("저장하였습니다.");
 
   }
@@ -50,7 +50,7 @@ public class MemberCommand {
 
     int no = response.requestInt("번호? ");
 
-    Member member = memberService.get(no);
+    Member member = memberDao.findByNo(no);
     response.println(String.format("이름: %s", member.getName()));
     response.println(String.format("이메일: %s", member.getEmail()));
     response.println(String.format("사진: %s", member.getPhoto()));
@@ -64,7 +64,7 @@ public class MemberCommand {
 
     int no = response.requestInt("번호? ");
 
-    Member member = memberService.get(no);
+    Member member = memberDao.findByNo(no);
     if (member == null) {
       response.println("해당 번호의 회원이 없습니다.");
       return;
@@ -101,7 +101,7 @@ public class MemberCommand {
         || temp.getPassword() != null
         || temp.getPhoto() != null
         || temp.getTel() != null) {
-      memberService.update(temp);
+      memberDao.update(temp);
       response.println("회원을 변경했습니다.");
     } else {
       response.println("변경 취소했습니다.");
@@ -113,7 +113,7 @@ public class MemberCommand {
   public void search(Response response) throws Exception {
 
     String keyword = response.requestString("검색어? ");
-    List<Member> members = memberService.search(keyword);
+    List<Member> members = memberDao.findByKeyword(keyword);
     for (Member member : members) {
       response.println(String.format("%3d, %-4s, %-20s, %-15s, %s", 
           member.getNo(), member.getName(), 
@@ -126,7 +126,7 @@ public class MemberCommand {
 
     int no = response.requestInt("번호? ");
 
-    if(memberService.delete(no) == 0) {
+    if(memberDao.delete(no) == 0) {
       response.println("해당 회원을 찾을 수 없습니다.");
     } else {
       response.println("회원을 삭제했습니다.");
