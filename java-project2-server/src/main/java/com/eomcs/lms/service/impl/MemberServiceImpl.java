@@ -16,8 +16,11 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public List<Member> list() {
-    return memberDao.findAll();
+  public List<Member> list(String keyword) {
+    if (keyword == null)
+      return memberDao.findAll();
+    else 
+      return memberDao.findByKeyword(keyword);
   }
 
   @Override
@@ -39,9 +42,4 @@ public class MemberServiceImpl implements MemberService {
   public int delete(int no) {
     return memberDao.delete(no);
   }  
-  
-  @Override
-  public List<Member> search(String keyword) {
-    return memberDao.findByKeyword(keyword);
-  }
 }
