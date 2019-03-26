@@ -11,8 +11,10 @@ plugins {
     id 'java'
 
     // Apply the application plugin to add support for building an application
-    id 'application'
-    id 'eclipse'
+    // id 'application'
+    // id 'eclipse'
+    id 'eclipse-wtp' // java 웹 프로젝트 플러그인
+    id 'war' // 웹 아카이브 파일(.war)을 다루는 플러그인
 }
 
 repositories {
@@ -23,9 +25,13 @@ repositories {
 
 dependencies {
 
+   // Servlet API 라이브러리
+   // => 프로젝트를 컴파일 할 때만 사용할 라이브러리라면 providedCompile 메서드를 사용하라.
+   // => 이 메서드로 지정된 라이브러리는 배포할 때 배포 파일(.war, .jar 등)에 포함되지 않는다. 
+   providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+   
    // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
    compile group: 'org.springframework', name: 'spring-jdbc', version: '5.1.5.RELEASE'
-
 
    // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.6.0'
@@ -52,10 +58,10 @@ dependencies {
    
    // log4j 2.x 라이브러리
    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
-   
+
 }
 
 // 만약 Gradle을 사용하여 프로젝트를 실행한다면 다음 클래스가 실행될 것이다.
 // $ gradle build를 수행한 후
 // $ gradle run 을 실행하면 다음에서 설정한 ServerApp 클래스를 실행한다.
-mainClassName = 'com.eomcs.lms.ServerApp'
+// mainClassName = 'com.eomcs.lms.ServerApp'
