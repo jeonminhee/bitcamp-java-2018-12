@@ -81,14 +81,11 @@ public class Servlet04 extends GenericServlet {
     // 2) Apache commons-fileupload 문서에 따라 코딩한다.
 
     // => 멀티파트 데이터를 분석하여 FileItem 객체에 담아 줄 공장을 준비한다.
-    DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
-
     // => 공장 객체를 사용하여 클라이언트가 보낸 데이터를 처리 할 객체 준비
-    ServletFileUpload multipartDataHandler = new ServletFileUpload(fileItemFactory);
+    ServletFileUpload multipartDataHandler = new ServletFileUpload(new DiskFileItemFactory());
 
     // => 분석한 데이터를 보관할 맵 객체를 준비한다.
     HashMap<String, String> paramMap = new HashMap<>();
-
 
     try {
       // => 멀티파트 데이터 처리기를 이용하여 클라이언트 요청을 분석하기

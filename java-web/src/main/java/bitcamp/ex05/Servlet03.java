@@ -1,4 +1,4 @@
-// 클라이언트가 보낸 데이터 읽기 - GET 요청 데이터 읽기
+// HTTP 프로토콜 다루기 - MyHttpServlet2 클래스를 활용하기
 package bitcamp.ex05;
 
 import java.io.IOException;
@@ -13,30 +13,32 @@ public class Servlet03 extends MyHttpServlet2 {
   
   private static final long serialVersionUID = 1L;
 
+  // HTTP GET 요청에 응답하고 싶다면 
+  // 상속 받은 메서드 중에서 doGet()을 오버라이딩 한다.
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(
+      HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     // 테스트
-    // -http://localhost:8080/java-web/ex05/test03.html
-    
+    // - http://localhost:8080/java-web/ex05/test03.html 실행
+    //
     response.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = response.getWriter();
-      out.println("GET 요청입니다.");
-  }
-
-  @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-    // 테스트
-    // -http://localhost:8080/java-web/ex05/test03.html
-    
-    response.setContentType("text/plain;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-      out.println("POST 요청입니다.");
-    
+    out.println("GET 요청입니다.");
   }
   
+  // HTTP POST 요청에 응답하고 싶다면 
+  // 상속 받은 메서드 중에서 doPost()을 오버라이딩 한다.
+  @Override
+  protected void doPost(
+      HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    // 테스트
+    // - http://localhost:8080/java-web/ex05/test03.html 실행
+    //
+    response.setContentType("text/plain;charset=UTF-8");
+    PrintWriter out = response.getWriter();
+    out.println("POST 요청입니다.");
+  }
 }
-
-
 
