@@ -15,17 +15,20 @@ import com.eomcs.lms.service.LessonService;
 @SuppressWarnings("serial")
 @WebServlet("/lesson/add")
 public class LessonAddServlet extends HttpServlet {
-  
+
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    
+
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
-    
+
     out.println("<htm>");
     out.println("<head><title>새 수업</title></head>");
     out.println("<body>");
+
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);
     out.println("<h1>새 수업</h1>");
     out.println("<form action='add' method='post'>");
     out.println("<table border='1'>");
@@ -63,22 +66,22 @@ public class LessonAddServlet extends HttpServlet {
     out.println("</body>");
     out.println("</html>");
   }
-  
+
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    
+
     LessonService lessonService = ((ApplicationContext) getServletContext().getAttribute("iocContainer")).getBean(LessonService.class);
-    
+
     Lesson lesson = new Lesson();
-    
+
     lesson.setTitle(request.getParameter("title"));
     lesson.setContents(request.getParameter("contents"));
     lesson.setStartDate(Date.valueOf(request.getParameter("startDate")));
     lesson.setEndDate(Date.valueOf(request.getParameter("endDate")));
     lesson.setTotalHours(Integer.parseInt(request.getParameter("totalHours")));
     lesson.setDayHours(Integer.parseInt(request.getParameter("dayHours")));
-    
+
     lessonService.add(lesson);
 
     response.sendRedirect("list");

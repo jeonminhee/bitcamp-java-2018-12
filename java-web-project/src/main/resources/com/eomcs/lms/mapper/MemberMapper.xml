@@ -43,6 +43,17 @@
       member_id = #{value}
   </select>
   
+  <select id="findByEmailPassword" resultMap="memberMap" parameterType="map">
+    select 
+    <include refid="default-columns"/>, 
+      photo
+    from 
+      lms_member
+    where 
+      email = #{email}
+      and pwd = password(#{password})
+  </select>
+  
   <select id="findByKeyword" resultMap="memberMap" parameterType="string">
     <bind name="pattern1" value="'%' + _parameter + '%'"/>
     select 
@@ -76,7 +87,7 @@
     <set>
       <if test="name != null">name = #{name},</if>
       <if test="email != null">email = #{email},</if>
-      <if test="password != null">pwd = password(#{password}),</if>
+      <if test="password != ''">pwd = password(#{password}),</if>
       <if test="tel != null">tel = #{tel},</if>
       <if test="photo != null">photo = #{photo}</if>
     </set>  
