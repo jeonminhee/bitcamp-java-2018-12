@@ -1,7 +1,7 @@
 package com.eomcs.lms.servlet;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,32 +21,17 @@ public class BoardListServlet extends HttpServlet {
 
     BoardService boardService = ((ApplicationContext) getServletContext().getAttribute("iocContainer")).getBean(BoardService.class);
     List<Board> boards = boardService.list();
-
+    
+    // JSP가 게시물 목록을 다룰 수 있도록 ServletRequest 보관소에 저장한다.
+    request.setAttribute("list", boards);
+    
     response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-
-    out.println("<html><head><title>게시물 목록</title></head>");
-    out.println("<body>");
     
-    // 헤더를 출력한다.
-    request.getRequestDispatcher("/header").include(request, response);
+    // JSP의 실행을 포함시킨다.
+    RequestDispatcher rd = request.getRequestDispatcher("/board/list.jsp");
+    rd.include(request, response);
     
-    out.println("<h1>게시물 목록</h1>");
-    out.println("<p><a href='add'>새 글</a></p>");
-    out.println("<p><a href='../'>메인화면</a></p>");
-    out.println("<table border='1'>");
-    out.println("<tr> <th>번호</th> <th>제목</th> <th>등록일</th> <th>조회수</th> </tr>");
-    for (Board board : boards) {
-      out.println(String.format(
-          "<tr><td>%d</td> <td><a href='detail?no=%1$d'>%s</a></td> <td>%s</td> <td>%d</td></tr>", 
-          board.getNo(), 
-          board.getContents(), 
-          board.getCreatedDate(), 
-          board.getViewCount()));
-    }
-    out.println("</table></body></html>");
   }
-
 }
 
 
