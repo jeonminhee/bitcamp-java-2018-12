@@ -24,7 +24,7 @@ public class MemberSearchServlet extends HttpServlet {
 
     List<Member> members = memberService.list(keyword);
     
-    request.setAttribute("search", members);
+    request.setAttribute("members", members);
 
     response.setContentType("text/html;charset=UTF-8");
 

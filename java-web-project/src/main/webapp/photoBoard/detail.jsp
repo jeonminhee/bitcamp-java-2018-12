@@ -1,16 +1,9 @@
 <%@page import="com.eomcs.lms.domain.PhotoFile"%>
 <%@page import="java.util.List"%>
 <%@page import="com.eomcs.lms.domain.Lesson"%>
-<%@page import="com.eomcs.lms.domain.PhotoBoard"%>
-<%@page import="com.eomcs.lms.domain.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
 
-<%
-  PhotoBoard board = (PhotoBoard) request.getAttribute("board");
-  List<Lesson> lessons = (List<Lesson>) request.getAttribute("lessons");
-  List<PhotoFile> files = board.getFiles();
-%>
 
 <html>
 <head>
@@ -18,7 +11,12 @@
 </head>
 <body>
   <jsp:include page="/header.jsp" />
-  <h1>사진 조회(JSP)</h1>
+  <h1>사진 조회(JSP2)</h1>
+  <jsp:useBean scope="request" id="board" class="com.eomcs.lms.domain.PhotoBoard"/>
+  <jsp:useBean scope="request" id="lessons" type="java.util.List<Lesson>"/>
+  <%
+  List<PhotoFile> files = board.getFiles();
+  %>
   <% if (board == null) { %>
   <p>해당 사진을 찾을 수 없습니다.</p>
   <%} else {%>
@@ -26,11 +24,11 @@
     <table border='1'>
       <tr>
         <th>번호</th>
-        <td><input name='no' value=<%=board.getNo()%> readonly></td>
+        <td><input name='no' value='<%=board.getNo()%>' readonly></td>
       </tr>
       <tr>
         <th>제목</th>
-        <td><input name='title' value=<%=board.getTitle()%>></td>
+        <td><input name='title' value='<%=board.getTitle()%>'></td>
       </tr>
       <tr>
         <th>등록일</th>
@@ -45,7 +43,7 @@
         <td>
         <select name='lessonNo'>
         <%for (Lesson lesson : lessons) {%>
-            <option value=<%=lesson.getNo()%><%=board.getLessonNo() == lesson.getNo() ? " selected" : ""%>>
+            <option value='<%=lesson.getNo()%>' <%=board.getLessonNo() == lesson.getNo() ? "selected" : ""%>>
             <%=lesson.getTitle()%>(<%=lesson.getStartDate()%> ~ <%=lesson.getEndDate()%>)</option>
          <%}%>
         </select></td>

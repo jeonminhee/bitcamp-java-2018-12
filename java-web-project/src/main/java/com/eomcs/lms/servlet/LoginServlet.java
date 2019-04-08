@@ -1,6 +1,5 @@
 package com.eomcs.lms.servlet;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -43,33 +42,9 @@ public class LoginServlet extends HttpServlet {
       }
     }
 
+    request.setAttribute("email", email);
     response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-
-    out.println("<html>");
-    out.println("<head><title>로그인</title></head>");
-
-    out.println("<body>");
-    out.println("<h1>로그인</h1>");
-
-    out.println("<form action='login' method='post'>");
-    out.println("<table border='1'>");
-    out.println("<tr>");
-    out.println("  <th>이메일</th>");
-    out.printf("  <td><input type='email' name='email' value='%s'></td>\n", email);
-    out.println("</tr>");
-    out.println("<tr>");
-    out.println("  <th>암호</th>");
-    out.println("  <td><input type='password' name='password'></td>");
-    out.println("</tr>");
-    out.println("</table>");
-    out.println("<input type='checkbox' name='saveEmail'> 이메일 저장");
-    out.println("<p>");
-    out.println("  <button>로그인</button>");
-    out.println("</p>");
-    out.println("</form>");
-    out.println("</body>");
-    out.println("</html>");
+    request.getRequestDispatcher("/auth/form.jsp").include(request, response);
 
   }
 
@@ -94,13 +69,8 @@ public class LoginServlet extends HttpServlet {
     Member member = memberService.get(request.getParameter("email"), request.getParameter("password"));
 
     if(member == null) {
-      response.setHeader("Refresh", "2;url=login");
       response.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = response.getWriter();
-      out.println("<html><head><title>로그인 실패</title></head><body>");
-      out.println("<h1>로그인 오류</h1>");
-      out.println("<p>이메일 또는 암호가 맞지 않습니다.</p>");
-      out.println("</body></html>");
+      request.getRequestDispatcher("/auth/fail.jsp").include(request, response);
       return;
     }    
 
@@ -112,7 +82,7 @@ public class LoginServlet extends HttpServlet {
     // ../ 메인으로 가라는 뜻
     String refererUrl = (String)session.getAttribute(REFERER_URL);
     if(refererUrl == null) {
-      response.sendRedirect("../");
+      response.sendRedirect(getServletContext().getContextPath());
     } else {
       response.sendRedirect(refererUrl);
     }

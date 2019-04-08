@@ -1,17 +1,13 @@
-<%@page import="com.eomcs.lms.domain.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
-<%
-  Member member = (Member) request.getAttribute("member");
-%>
-
 <html>
 <head>
 <title>회원 조회</title>
 </head>
 <body>
   <jsp:include page="/header.jsp" />
-  <h1>회원 조회(JSP)</h1>
+  <h1>회원 조회(JSP2)</h1>
+<jsp:useBean scope="request" id="member" class="com.eomcs.lms.domain.Member"/>
   <%
     if (member == null) {
   %>

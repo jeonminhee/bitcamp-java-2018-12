@@ -3,16 +3,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
 <!DOCTYPE html>
-<%
-  List<Member> members = (List<Member>) request.getAttribute("search");
-%>
 <html>
 <head>
 <title>회원 검색</title>
 </head>
 <body>
   <jsp:include page="/header.jsp" />
-  <h1>회원 검색(JSP)</h1>
+  <h1>회원 검색(JSP2)</h1>
   <table border='1'>
     <tr>
       <th>번호</th>
@@ -21,7 +18,7 @@
       <th>전화</th>
       <th>가입일</th>
     </tr>
-    
+    <jsp:useBean scope="request" id="members" type="java.util.List<Member>"/>
     <%for(Member member : members) {%>
     <tr>
       <td><%=member.getNo()%></td>
