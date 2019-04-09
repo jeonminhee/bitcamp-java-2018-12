@@ -24,10 +24,8 @@ public class LessonDetailServlet extends HttpServlet {
 
     Lesson lesson = lessonService.get(no);
     request.setAttribute("lesson", lesson);
-
-    response.setContentType("text/html;charset=UTF-8");
     
-    request.getRequestDispatcher("/lesson/detail.jsp").include(request, response);
+    request.setAttribute("viewUrl", "/lesson/detail.jsp");
     
   }
 

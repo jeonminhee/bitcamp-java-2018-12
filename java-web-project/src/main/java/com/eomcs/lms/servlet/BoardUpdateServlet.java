@@ -24,15 +24,14 @@ public class BoardUpdateServlet extends HttpServlet {
     board.setContents(request.getParameter("contents"));
 
     if (boardService.update(board) > 0) {
-      response.sendRedirect("list");
+      request.setAttribute("viewUrl", "redirect:list");
       return;
+    } else {
+      // 오류 내용을 출력하는 JSP로 포워딩한다.
+      request.setAttribute("error.title", "게시물 변경");
+      request.setAttribute("error.content", "해당 번호의 게시물이 없습니다.");
     }
 
-    // 오류 내용을 출력하는 JSP로 포워딩한다.
-    request.setAttribute("error.title", "게시물 변경");
-    request.setAttribute("error.content", "해당 번호의 게시물이 없습니다.");
-    
-    request.getRequestDispatcher("/error.jsp").forward(request, response);
   }
 }
 

@@ -2,7 +2,6 @@ package com.eomcs.lms.servlet;
 import java.io.IOException;
 import java.util.UUID;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
-@MultipartConfig(maxFileSize = 1024 * 1024 * 5)
 @WebServlet("/member/update")
 @SuppressWarnings("serial")
 public class MemberUpdateServlet extends HttpServlet {
@@ -39,15 +37,14 @@ public class MemberUpdateServlet extends HttpServlet {
     }
 
     if (memberService.update(member) > 0) {
-      response.sendRedirect("list");
+      request.setAttribute("viewUrl", "redirect:list");
       return;
+    } else {
+
+      // 오류 내용을 출력하는 JSP로 포워딩한다.
+      request.setAttribute("error.title", "회원 업데이트");
+      request.setAttribute("error.content", "해당 번호의 회원이 없습니다.");
+
     }
-
-    // 오류 내용을 출력하는 JSP로 포워딩한다.
-    request.setAttribute("error.title", "회원 업데이트");
-    request.setAttribute("error.content", "해당 번호의 회원이 없습니다.");
-    
-    request.getRequestDispatcher("/error.jsp").forward(request, response);
   }
-
 }

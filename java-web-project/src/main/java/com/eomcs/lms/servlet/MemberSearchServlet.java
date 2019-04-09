@@ -26,9 +26,7 @@ public class MemberSearchServlet extends HttpServlet {
     
     request.setAttribute("members", members);
 
-    response.setContentType("text/html;charset=UTF-8");
-
-    request.getRequestDispatcher("/member/search.jsp").include(request, response);
+    request.setAttribute("viewUrl", "/member/search.jsp");
     
   }
 

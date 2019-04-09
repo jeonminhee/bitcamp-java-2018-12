@@ -25,10 +25,8 @@ public class BoardDetailServlet extends HttpServlet  {
     // JSP가 사용할 수 있도록 ServletRequest 보관소에 저장해 둔다.
     request.setAttribute("board", board);
 
-    response.setContentType("text/html;charset=UTF-8");
-
     // JSP의 실행을 포함시킨다.
-    request.getRequestDispatcher("/board/detail.jsp").include(request, response);
+    request.setAttribute("viewUrl", "/board/detail.jsp");
 
   }
 }

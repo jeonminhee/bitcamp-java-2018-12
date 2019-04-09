@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.lms.service.LessonService;
 import com.eomcs.lms.service.PhotoBoardService;
 
-@MultipartConfig(maxFileSize = 1024 * 1024 * 5)
 @SuppressWarnings("serial")
 @WebServlet("/photoboard/add")
 public class PhotoBoardAddServlet extends HttpServlet {
@@ -37,10 +35,9 @@ public class PhotoBoardAddServlet extends HttpServlet {
     LessonService lessonService = ((ApplicationContext) getServletContext().getAttribute("iocContainer")).getBean(LessonService.class);
 
     List<Lesson> lessons = lessonService.list();
-    response.setContentType("text/html;charset=UTF-8");
     request.setAttribute("list", lessons);
     
-    request.getRequestDispatcher("/photoBoard/form.jsp").include(request, response);
+    request.setAttribute("viewUrl", "/photoBoard/form.jsp");
   }
 
   @Override
@@ -82,10 +79,9 @@ public class PhotoBoardAddServlet extends HttpServlet {
       request.setAttribute("error.content", "사진 제목을 입력하세요.");
     } else {
       photoBoardService.add(board);
-      response.sendRedirect("list");
+      request.setAttribute("viewUrl", "redirect:list");
       return;
     }
-    request.getRequestDispatcher("/error.jsp").forward(request, response);
     
   }
 }

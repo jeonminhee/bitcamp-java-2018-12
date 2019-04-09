@@ -20,15 +20,9 @@ public class LessonListServlet extends HttpServlet {
     throws ServletException, IOException {
     
     LessonService lessonService = ((ApplicationContext) getServletContext().getAttribute("iocContainer")).getBean(LessonService.class);
-    
     List<Lesson> lessons = lessonService.list();
-    
-    response.setContentType("text/html;charset=UTF-8");
-    
     request.setAttribute("list", lessons);
     
-    request.getRequestDispatcher("/lesson/list.jsp").include(request, response);
-    
-    
+    request.setAttribute("viewUrl", "/lesson/list.jsp");
   }
 }

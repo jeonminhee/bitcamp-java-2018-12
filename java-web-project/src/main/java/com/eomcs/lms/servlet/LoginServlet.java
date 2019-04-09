@@ -1,5 +1,6 @@
 package com.eomcs.lms.servlet;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -21,30 +22,10 @@ public class LoginServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    // 도대체 어느 페이지에서 이리로 보냈나?
-    // => 요청 헤더 Referer의 값을 세션에 보관한다.
-    //    로그인을 처리할 때 해당 페이지로 리다이렉트 할 것이다.
-    // => 웹 브라우저의 주소 창에 직접 URL을 지정한 경우에는
-    //    요청 헤더에 Referer가 없다.
-    //
     HttpSession session = request.getSession();
     session.setAttribute(REFERER_URL, request.getHeader("Referer"));
 
-    // 이메일 쿠키 값을 꺼내온다.
-    Cookie[] cookies = request.getCookies();
-    String email = "";
-    if(cookies != null) {
-      for(Cookie c : cookies) {
-        if(c.getName().equals("email")) {
-          email = c.getValue();
-          break;
-        }
-      }
-    }
-
-    request.setAttribute("email", email);
-    response.setContentType("text/html;charset=UTF-8");
-    request.getRequestDispatcher("/auth/form.jsp").include(request, response);
+    request.setAttribute("viewUrl", "/auth/form.jsp");
 
   }
 
@@ -61,7 +42,15 @@ public class LoginServlet extends HttpServlet {
       cookie = new Cookie("email", "");
       cookie.setMaxAge(0); // 기존의 쿠키를 제거한다.
     }
-    response.addCookie(cookie);
+    
+    // 인클루딩 서블릿 쪽에서 쿠키를 추가할 수 없다.
+    //response.addCookie(cookie); // 동작 안함!
+
+    // 쿠키를 응답 헤더에 추가하는 것은 프론트 컨트롤러에게 맡긴다.
+    ArrayList<Cookie> cookies = new ArrayList<>();
+    cookies.add(cookie);
+    request.setAttribute("cookies", cookies);
+    
 
     MemberService memberService = 
         ((ApplicationContext) getServletContext().getAttribute("iocContainer")).getBean(MemberService.class);
@@ -69,8 +58,7 @@ public class LoginServlet extends HttpServlet {
     Member member = memberService.get(request.getParameter("email"), request.getParameter("password"));
 
     if(member == null) {
-      response.setContentType("text/html;charset=UTF-8");
-      request.getRequestDispatcher("/auth/fail.jsp").include(request, response);
+      request.setAttribute("viewUrl", "/auth/fail.jsp");
       return;
     }    
 
@@ -82,9 +70,9 @@ public class LoginServlet extends HttpServlet {
     // ../ 메인으로 가라는 뜻
     String refererUrl = (String)session.getAttribute(REFERER_URL);
     if(refererUrl == null) {
-      response.sendRedirect(getServletContext().getContextPath());
+      request.setAttribute("viewUrl", "redirect:" + getServletContext().getContextPath());
     } else {
-      response.sendRedirect(refererUrl);
+      request.setAttribute("viewUrl", "redirect:" + refererUrl);
     }
 
   }

@@ -22,10 +22,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     
     List<PhotoBoard> boards = photoBoardService.list(0, null);
     
-    response.setContentType("text/html;charset=UTF-8");
-
     request.setAttribute("list", boards);
-    request.getRequestDispatcher("/photoBoard/list.jsp").include(request, response);
+    request.setAttribute("viewUrl", "/photoBoard/list.jsp");
   }
   
 }

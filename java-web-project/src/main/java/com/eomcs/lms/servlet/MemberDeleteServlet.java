@@ -20,15 +20,13 @@ public class MemberDeleteServlet extends HttpServlet {
     int no = Integer.parseInt(request.getParameter("no"));
 
     if (memberService.delete(no) > 0) {
-      response.sendRedirect("list");
+      request.setAttribute("viewUrl", "redirect:list");
       return;
+    } else {
+
+      // 오류 내용을 출력하는 JSP로 포워딩한다.
+      request.setAttribute("error.title", "회원 삭제");
+      request.setAttribute("error.content", "해당 번호의 회원이 없습니다.");
     }
-
-    // 오류 내용을 출력하는 JSP로 포워딩한다.
-    request.setAttribute("error.title", "회원 삭제");
-    request.setAttribute("error.content", "해당 번호의 회원이 없습니다.");
-    
-    request.getRequestDispatcher("/error.jsp").forward(request, response);
   }
-
 }

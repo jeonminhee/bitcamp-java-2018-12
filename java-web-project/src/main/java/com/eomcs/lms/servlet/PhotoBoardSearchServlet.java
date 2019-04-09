@@ -36,9 +36,8 @@ public class PhotoBoardSearchServlet extends HttpServlet {
 
     List<PhotoBoard> boards = photoBoardService.list(lessonNo, searchWord);
     
-    response.setContentType("text/html;charset=UTF-8");
     request.setAttribute("boards", boards);
-    request.getRequestDispatcher("/photoBoard/search.jsp").include(request, response);
+    request.setAttribute("viewUrl", "/photoBoard/search.jsp");
 
   }
 
