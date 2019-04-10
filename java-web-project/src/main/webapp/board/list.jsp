@@ -10,7 +10,7 @@
   <jsp:include page="/header.jsp" />
   <h1>게시물 목록(JSP2 + EL + JSTL)</h1>
   <p>
-    <a href='add'>새 글</a>
+    <a href='form'>새 글</a>
   </p>
   <p>
     <a href='../../'>메인화면</a>

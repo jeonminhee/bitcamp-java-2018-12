@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 import com.eomcs.lms.AppConfig;
 
 // 웹 애플리케이션이 시작되거나 종료될 때 보고를 받는 클래스이다.
@@ -17,12 +18,26 @@ public class ContextLoaderListener implements ServletContextListener {
 
   final static Logger logger = LogManager.getLogger(ContextLoaderListener.class);
 
+  static class WebAppConfig {
+    static ServletContext servletContext;
+    
+    @Bean
+    public ServletContext servletContext() {
+      return WebAppConfig.servletContext;
+    }
+  }
+  
   @Override
   public void contextInitialized(ServletContextEvent sce) {
+    // Spring IoC 컨테이너가 객체를 생성하기 위해서 설정 클래스를 사용하기 전에
+    // WebAppConfig 클래스에 대해 ServletContext를 주입한다.
+    WebAppConfig.servletContext = sce.getServletContext();
+    
     // 웹 애플리케이션이 시작될 때 서블릿 컨테이너는 이 메서드를 호출해준다.
     // => InitServlet이 하던 Spring IoC Container 준비를 이 메서드에서 수행한다.
     logger.info("Spring IoC 컨테이너 준비");// 
-    ApplicationContext iocContainer = new AnnotationConfigApplicationContext(AppConfig.class);
+    ApplicationContext iocContainer = new AnnotationConfigApplicationContext(
+        AppConfig.class, WebAppConfig.class);
     printBeans(iocContainer);
 
     // 다른 서블릿이 IoC 컨테이너를 사용할 수 있도록 

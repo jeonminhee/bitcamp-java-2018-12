@@ -9,6 +9,6 @@
   <jsp:include page="/header.jsp" />
 
   <h1>로그인 실패</h1>
-  <p>이메일 또는 암호가 맞지않니다.</p>
+  <p>이메일 또는 암호가 맞지않습니다.</p>
 </body>
 </html>
