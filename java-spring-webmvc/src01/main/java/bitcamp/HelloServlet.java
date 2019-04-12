@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 @WebServlet("/hello")
 public class HelloServlet extends HttpServlet {
-  
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(
+      HttpServletRequest request, 
+      HttpServletResponse response)
       throws ServletException, IOException {
     
     response.setContentType("text/html;charset=UTF-8");
@@ -23,5 +24,11 @@ public class HelloServlet extends HttpServlet {
     out.println("<html><head><title>hello</title></head>");
     out.println("<body><h1>Hello</h1></body></html>");
   }
-
 }
+
+
+
+
+
+
+
