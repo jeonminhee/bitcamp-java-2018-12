@@ -36,7 +36,7 @@ public class Controller04_4 {
       ) {
     out.printf("model=%s\n", model);
     out.printf("capacity=%s\n", capacity);
-    // out.printf("auto=%s\n", auto);
+    out.printf("auto=%s\n", auto);
     out.printf("createdDate=%s\n", createdDate);
   }
 

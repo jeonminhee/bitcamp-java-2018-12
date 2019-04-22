@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
     xmlns:p="http://www.springframework.org/schema/p"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -9,15 +10,45 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd">
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
   
   <context:component-scan base-package="bitcamp.app2"/>
+  <mvc:annotation-driven enable-matrix-variables="true"/>
   
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     <property name="prefix" value="/WEB-INF/jsp2/"/>
     <property name="suffix" value=".jsp"/>
 </bean>
+  
+  
+  <!-- 인터셉터 배치하기 -->
+  <mvc:interceptors>
+   <bean class="bitcamp.app2.Controller04_1_Interceptor3"/>
+  
+    <!-- 특정 URL을 요청했을 때 실행될 인터셉터 배치하기 -->
+  <mvc:interceptor>
+    <mvc:mapping path="/c04_1/**"/> <!-- URL의 기준은 프론트 컨트롤러이다. -->
+      <bean class="bitcamp.app2.Controller04_1_Interceptor1"/>
+    </mvc:interceptor>
+  </mvc:interceptors>
+  
+  <mvc:interceptors>
+    <mvc:interceptor>
+      <mvc:mapping path="/c04_1/a/*"/> <!-- URL의 기준은 프론트 컨트롤러이다. -->
+      <bean class="bitcamp.app2.Controller04_1_Interceptor2"/>
+    </mvc:interceptor>
+    
+
+    <mvc:interceptor>
+      <mvc:mapping path="/c04_1/**"/> <!-- URL의 기준은 프론트 컨트롤러이다. -->
+      <mvc:exclude-mapping path="/c04_1/a/**"/>
+      <bean class="bitcamp.app2.Controller04_1_Interceptor4"/>
+    </mvc:interceptor>
+    
+  </mvc:interceptors>
   
 </beans>
 
