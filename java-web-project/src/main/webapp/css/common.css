@@ -9,6 +9,11 @@ h1 {
 /* 	text-align: center; */
 }
 
+div.bit-list {
+  min-height: 200px;	
+	
+}
+
 div.container {
 	width: 800px;
 }
