@@ -1,17 +1,22 @@
 @charset "UTF-8";
 
 body {
-	 font-size: medium;
+	font-size: medium;
 }
 
 h1 {
 	/* border: 1px solid red; */
-/* 	text-align: center; */
+	/* 	text-align: center; */
+	
+}
+
+.img-thumbnail {
+	max-width: 100px;
+	max-height: 100px;
 }
 
 div.bit-list {
-  min-height: 200px;	
-	
+	min-height: 200px;
 }
 
 div.container {

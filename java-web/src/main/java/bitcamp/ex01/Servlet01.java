@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 // 배치 파일(web.xml; DD파일)에 서블릿 정보를 등록해야만 실행될 수 있다.
 // WEB-INF/web.xml
 //
-// 서블릿 실행 방법
+// 서블릿 실행 방법   
 // => http://서버주소:포트번호/웹애플리케이션이름/서블릿URL
 //    예) http://localhost:8080/java-web/ex01/s01
 //

@@ -29,7 +29,7 @@ public class PhotoBoardController {
   
   @GetMapping("form")
   public void form(Model model) {
-    List<Lesson> lessons = lessonService.list();
+    List<Lesson> lessons = lessonService.list(0,0);
     model.addAttribute("lessons", lessons);
   }
   
@@ -82,7 +82,7 @@ public class PhotoBoardController {
   public String detail(@PathVariable int no, Model model) {
     
     PhotoBoard board = photoBoardService.get(no);
-    List<Lesson> lessons = lessonService.list();
+    List<Lesson> lessons = lessonService.list(0,0);
     model.addAttribute("board", board);
     model.addAttribute("lessons", lessons);
     

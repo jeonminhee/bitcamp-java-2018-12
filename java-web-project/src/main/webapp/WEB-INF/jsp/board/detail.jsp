@@ -41,7 +41,7 @@
           <div class="form-group row">
             <label for="createdDate" class="col-sm-2 col-form-label">작성일</label>
             <div class="col-sm-8">
-              <input type="text" readonly class="form-control-plaintext" id="createdDate"
+              <input type="date" readonly class="form-control-plaintext" id="createdDate"
                 value="${board.createdDate}">
             </div>
           </div>
@@ -53,6 +53,7 @@
                 value="${board.viewCount}">
             </div>
           </div>
+          
           <div class="form-group row">
             <div class="col-sm-8">
               <a href='.' class="btn btn-primary">목록</a> 
@@ -61,6 +62,7 @@
               <button class="btn btn-primary">변경</button>
             </div>
           </div>
+          
         </form>
       </c:otherwise>
     </c:choose>

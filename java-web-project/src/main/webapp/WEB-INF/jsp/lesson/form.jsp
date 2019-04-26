@@ -1,44 +1,71 @@
 <%@ 
-page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-  trimDirectiveWhitespaces="true"%>
+page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <html>
 <head>
 <title>새 수업</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="${contextRootPath}/css/common.css">
+
 </head>
 <body>
-  <jsp:include page="../header.jsp" />
-  <h1>새 수업</h1>
-  <form action='add' method='post'>
-    <table border='1'>
-      <tr>
-        <th>수업</th>
-        <td><input type='text' name='title'></td>
-      </tr>
-      <tr>
-        <th>내용</th>
-        <td><textarea name='contents' rows='5' cols='50'></textarea></td>
-      </tr>
-      <tr>
-        <th>시작일</th>
-        <td><input type='date' name='startDate'></td>
-      </tr>
-      <tr>
-        <th>종료일</th>
-        <td><input type='date' name='endDate'></td>
-      </tr>
-      <tr>
-        <th>총 교육시간</th>
-        <td><input type='number' name='totalHours'></td>
-      </tr>
-      <tr>
-        <th>일 교육시간</th>
-        <td><input type='number' name='dayHours'></td>
-      </tr>
-    </table>
-    <p>
-      <button type='submit'>등록</button>
-      <a href='.'>목록</a>
-    </p>
-  </form>
+	<jsp:include page="../header.jsp" />
+
+	<div class="container">
+		<h1>새 수업</h1>
+		<form action='add' method='post'>
+
+			<div class="form-group">
+				<label for="title">수업</label> <input type="text"
+					class="form-control" id="title" name="title">
+			</div>
+
+			<div class="form-group">
+				<label for="contents">내용</label>
+				<textarea class="form-control" id="contents" name="contents"
+					rows="3"></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="startDate">시작일</label> <input type="date"
+					class="form-control" id="startDate" name="startDate">
+			</div>
+
+			<div class="form-group">
+				<label for="endDate">종료일</label> <input type="date"
+					class="form-control" id="endDate" name="endDate">
+			</div>
+
+			<div class="row">
+			
+				<div class="col">
+					<label for="totalHours">총 교육시간</label> 
+					<input type="number" class="form-control" id="totalHours" name="totalHours">
+				</div>
+				
+				<div class="col">
+					<label for="totalHours">일 교육시간</label> 
+					<input type="number" class="form-control" id="dayHours" name="dayHours">
+				</div>
+				
+			</div>
+
+      <p>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button class="btn btn-primary btn-sm">등록</button>
+          <a href='.' class="btn btn-primary btn-sm">목록</a> 
+        </div>
+      </div>
+      </p>
+		</form>
+	</div>
+
+	<jsp:include page="../javascript.jsp" />
+	 
 </body>
 </html>
