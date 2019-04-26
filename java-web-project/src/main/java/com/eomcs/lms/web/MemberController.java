@@ -83,7 +83,7 @@ public class MemberController {
       pageNo = totalPage;
     }
     
-    List<Member> members = memberService.list(pageNo, pageSize, "");
+    List<Member> members = memberService.list(pageNo, pageSize, null);
     
     model.addAttribute("list", members);
     model.addAttribute("pageNo", pageNo);

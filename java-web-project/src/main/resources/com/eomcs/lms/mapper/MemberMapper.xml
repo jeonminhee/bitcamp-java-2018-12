@@ -30,10 +30,10 @@
     from 
       lms_member
     order by 
-      name desc
+      name asc
      <if test="#{size != null || rowNo != null}">
       limit #{rowNo}, #{size}
-      </if>
+     </if>
   </select>
   
   <select id="findByNo" resultMap="memberMap" parameterType="int">
