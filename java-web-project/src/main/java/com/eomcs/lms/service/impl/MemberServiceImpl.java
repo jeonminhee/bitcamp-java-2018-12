@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
   
   // 비지니스 객체에서 메서드 이름은 가능한 업무 용어를 사용한다.
   @Override
-  public List<Member> list(int pageSize, int pageNo, String keyword) {
+  public List<Member> list(int pageNo, int pageSize, String keyword) {
     
     HashMap<String, Object> params = new HashMap<>();
     params.put("size", pageSize);

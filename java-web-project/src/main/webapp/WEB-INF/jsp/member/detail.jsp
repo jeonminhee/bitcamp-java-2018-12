@@ -90,8 +90,6 @@
 						</div>
 					</div>
 
-
-
 					<p>
 						<a class="btn btn-outline-primary" href='.'>목록</a>
 						<a class="btn btn-outline-danger" href='delete/${member.no}'>삭제</a>
