@@ -44,11 +44,19 @@
     </div>
     <nav>
       <ul class="pagination justify-content-center">
-        <li class="page-item ${pageNo <= 1 ? 'disabled' : ''}"><a class="page-link" 
-            href="?pageNo=${pageNo - 1}&pageSize=${pageSize}">이전</a></li>
-        <li class="page-item active"><span class="page-link" href="#">${pageNo}</span></li>
-        <li class="page-item ${pageNo >= totalPage ? 'disabled' : ''}"><a class="page-link" 
-            href="?pageNo=${pageNo + 1}&pageSize=${pageSize}">다음</a></li>
+      
+        <li class="page-item ${pageNo <= 1 ? 'disabled' : ''}">
+          <a class="page-link" href="?pageNo=${pageNo - 1}&pageSize=${pageSize}">이전</a>
+        </li>
+        
+        <li class="page-item active">
+          <span class="page-link" href="#">${pageNo}</span>
+        </li>
+        
+        <li class="page-item ${pageNo >= totalPage ? 'disabled' : ''}">
+          <a class="page-link" href="?pageNo=${pageNo + 1}&pageSize=${pageSize}">다음</a>
+        </li>
+        
       </ul>
     </nav>
   </div>
