@@ -59,19 +59,18 @@
 						<c:when test="${empty member.photo}">
 							<img src="${contextRootPath}/images/default.jpg"
 								class="img-thumbnail">
-							<div class="form-group">
-								 <input type="file" id="photoFile" name="photoFile">
-							</div>
+
 						</c:when>
 						<c:otherwise>
 							<img src="${contextRootPath}/upload/member/${member.photo}"
 								class="img-thumbnail">
-              <div class="form-group">
-                 <input type="file" id="photoFile" name="photoFile">
-              </div>							
+						
 						</c:otherwise>
 					</c:choose>
 
+            <div class="form-group">
+               <input type="file" id="photoFile" name="photoFile">
+            </div>
 
 					<div class="form-group row">
 						<label for="tel" class="col-sm-2 col-form-label col-form-label-lg">전화</label>

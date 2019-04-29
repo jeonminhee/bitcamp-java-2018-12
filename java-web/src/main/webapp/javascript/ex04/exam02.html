@@ -17,10 +17,10 @@ var obj = new Object();
 // 기본 객체 안에는 다음의 함수들이 들어 있다.
 console.log(obj.toString());
 console.log(obj.valueOf());
-console.log(obj.hasOwnProperty("toString"));
+console.log(obj.hasOwnProperty("toString")); // 해당 메서드가 있는지 조사하는 메서드, 기본 메서드에 대해서는 false가 출력된다.
 console.log(obj.hasOwnProperty("hashCode"));
 
-// 이렇게 준비되 객체에 프로퍼티를 추가하고 싶다면 다음의 문법을 사용하라!
+// 이렇게 준비된 객체에 프로퍼티를 추가하고 싶다면 다음의 문법을 사용하라!
 // 객체.프로퍼티명 = 값;
 // 객체["프로퍼티명"] = 값;
 // 객체['프로퍼티명'] = 값;
@@ -37,6 +37,8 @@ console.log(obj.hasOwnProperty("title"));  // true
 console.log(obj.hasOwnProperty("content")); // true
 console.log(obj.hasOwnProperty("viewCount")); // true
 console.log(obj.hasOwnProperty("plus")); // true
+// 자바에서 프로퍼티는 세터 메서드의 이름이지만, 자바스크립트에서는 값을 넣는 객체 이름이다.
+// hasOwnProperty는 추후에 추가된 프로퍼티에 대해 검사를 한다.
 
 console.log(obj["title"]);
 console.log(obj['content']);
