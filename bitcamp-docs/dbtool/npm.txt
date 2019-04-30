@@ -21,3 +21,5 @@
   - "npm install"을 실행한 폴더에 "node_modules"라는 폴더가 생성된다. 
   - "node_modules"라는 폴더에 라이브러리를 다운로드 한다.
   - "node_modules"의 폴더명을 바꾸지 말고 그대로 사용하라!
+  - "node_modules"는 git에 업로드 하지 않는다!
+  - "package-lock.json"는 git에 업로드 하지 않는다.
