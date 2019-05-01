@@ -113,7 +113,7 @@
     update lms_photo 
     set 
       titl = #{title},
-      lesson_id = #{lessonNo} 
+      lesson_id = #{lessonNo}
     where 
       photo_id = #{no}
   </update>

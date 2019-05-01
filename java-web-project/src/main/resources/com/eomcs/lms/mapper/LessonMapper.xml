@@ -38,8 +38,7 @@
 
  <select id="findByNo" resultMap="lessonMap" parameterType="int">
   select
-  <include refid="default-columns" />
-  ,
+  <include refid="default-columns" />,
   conts,
   day_hr
   from
