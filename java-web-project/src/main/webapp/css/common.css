@@ -5,11 +5,11 @@ body {
 }
 
 body > header {
-  min-height: 60px;
+  min-height: 57px;
 }
     
 .container > h1 {
-  height: 40px;
+  height: 60px;
   /* border: 1px solid red; */
   /* text-align: center; */
 }
@@ -22,6 +22,12 @@ div.container {
   width: 800px;
 }
 
+.profile {
+	display: block; 
+	margin: 0px auto;
+	width: 150px;
+}
+
 .bit-invisible {
   display: none;
 }
@@ -29,4 +35,9 @@ div.container {
 #bit-login-state {
   margin: 0px 10px;
 }
+
+#bit-not-login-state {
+  margin: 0px 10px;
+}
+
 

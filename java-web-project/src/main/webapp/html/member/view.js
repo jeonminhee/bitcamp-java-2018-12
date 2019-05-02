@@ -1,13 +1,13 @@
 var param = location.href.split('?')[1];
 if (param) {
-  document.querySelector('h1').innerHTML = "수업 조회"
+  document.querySelector('h1').innerHTML = "회원 조회"
   loadData(param.split('=')[1])
   var el = document.querySelectorAll('.bit-new-item');
   for(e of el){
     e.style.display = 'none';
   }
   } else {
-    document.querySelector('h1').innerHTML = "새 수업"
+    document.querySelector('h1').innerHTML = "새 회원"
     var el = document.querySelectorAll('.bit-view-item');
     for(e of el){
       e.style.display = 'none';
@@ -29,23 +29,20 @@ document.querySelector('#add-btn').onclick = () => {
     }
     
   };
-  xhr.open('POST', '../../app/json/lesson/add', true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+  xhr.open('POST', '../../app/json/member/add', true);
+  xhr.setRequestHeader("Content-Type", "multipart/form-data")
   
-  var title = document.querySelector('#title').value,
-      contents = document.querySelector('#contents').value,
-      startDate = document.querySelector('#startDate').value,
-      endDate = document.querySelector('#endDate').value,
-      totalHours = document.querySelector('#totalHours').value,
-      dayHours = document.querySelector('#dayHours').value;
+  var name = document.querySelector('#name').value,
+      email = document.querySelector('#email').value,
+      password = document.querySelector('#password').value,
+      photo = document.querySelector('#photoFile').value,
+      tel = document.querySelector('#tel').value;
       
   xhr.send(
-      "title=" + encodeURIComponent(title) + 
-      "contents=" + encodeURIComponent(contents) + 
-      "startDate=" + startDate + 
-      "endDate=" + endDate + 
-      "totalHours=" + totalHours + 
-      "dayHours=" + dayHours);
+      "name=" + encodeURIComponent(name) + 
+      "email=" + email + 
+      "password=" + password + 
+      "tel=" + tel);
 };
 
 document.querySelector('#delete-btn').onclick = () => {
@@ -114,17 +111,17 @@ function loadData(no) {
     }
     
     var data = JSON.parse(xhr.responseText);
-    console.log(data);
+    console.log(data.photo);
     document.querySelector('#no').value = data.no;
-    document.querySelector('#title').value = data.title;
-    document.querySelector('#contents').value = data.contents;
-    document.querySelector('#startDate').value = data.startDate;
-    document.querySelector('#endDate').value = data.endDate;
-    document.querySelector('#totalHours').value = data.totalHours;
-    document.querySelector('#dayHours').value = data.dayHours;
+    document.querySelector('#name').value = data.name;
+    document.querySelector('#email').value = data.email;
+    document.querySelector('#password').value = data.password;
+    document.querySelector('#photo').src = "/java-web-project/upload/member/" + data.photo;
+    document.querySelector('#tel').value = data.tel;
+    document.querySelector('#registeredDate').value = data.registeredDate;
   };
   
-  xhr.open('GET', '../../app/json/lesson/detail?no=' + no, true);
+  xhr.open('GET', '../../app/json/member/detail?no=' + no, true);
   xhr.send();
 }
 

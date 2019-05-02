@@ -1,63 +1,64 @@
-<!DOCTYPE html>
+
 <html>
 <head>
-<title>수업</title>
-  <meta charset="UTF-8">
+<title>회원 조회</title>
+<meta charset="UTF-8">
   <link rel="stylesheet" href="/java-web-project/node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="/java-web-project/css/common.css">
   <link rel="stylesheet" href="/java-web-project/css/header.css">
+</head>
 <body>
   <header class="bit-main-header"></header>
   <div class="container">
     <h1></h1>
+    
     <form>
-
-          <div class="form-group row bit-view-item">
-            <label for="no" class="col-sm-2 col-form-label">번호</label>
+          <img id="photo" src="/java-web-project/images/default.jpg" class="profile">
+            
+            <div class="form-group">
+               <input type="file" id="photoFile" name="photoFile">
+            </div>
+            
+          <div class="form-group row bit-view-item"">
+            <label for="no" class="col-sm-2 col-form-label col-form-label-lg">번호</label>
             <div class="col-sm-8">
               <input type="text" class="form-control" id="no" name='no' readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="no" class="col-sm-2 col-form-label">제목</label>
+            <label for="name" class="col-sm-2 col-form-label col-form-label-lg">이름</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="title" name='title'>
+              <input type="text" class="form-control" id="name" name="name"'>
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="contents" class="col-sm-2 col-form-label">내용</label>
+            <label for="email" class="col-sm-2 col-form-label col-form-label-lg">이메일</label>
             <div class="col-sm-8">
-              <textarea class="form-control" id='contents' name='contents' rows='5'>werwer</textarea>
+              <input type="text" class="form-control" id="email" name="email">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="startDate" class="col-sm-2 col-form-label">시작일</label>
+            <label for="password" class="col-sm-2 col-form-label col-form-label-lg">암호</label>
             <div class="col-sm-8">
-              <input type="date" class="form-control" id="startDate" name='startDate'>
+              <input type="password" class="form-control" id="password" name="password">
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label for="tel" class="col-sm-2 col-form-label col-form-label-lg">전화</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="tel" name="tel">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="endDate" class="col-sm-2 col-form-label">종료일</label>
+            <label for="registeredDate" class="col-sm-2 col-form-label col-form-label-lg">가입일</label>
             <div class="col-sm-8">
-              <input type="date" class="form-control" id="endDate" name='endDate'>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label for="totalHours" class="col-sm-2 col-form-label">총 교육시간</label>
-            <div class="col-sm-8">
-              <input type="number" class="form-control" id="totalHours" name='totalHours'>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label for="dayHours" class="col-sm-2 col-form-label">일 교육시간</label>
-            <div class="col-sm-8">
-              <input type="number" class="form-control" id="dayHours" name='dayHours'>
+              <input type="text" class="form-control" id="registeredDate" name="registeredDate" >
             </div>
           </div>
 
@@ -76,4 +77,5 @@
   <script src="/java-web-project/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="../header.js"></script>
   <script src="view.js"></script>
+</body>
 </html>
