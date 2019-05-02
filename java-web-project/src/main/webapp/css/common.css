@@ -1,28 +1,32 @@
 @charset "UTF-8";
 
 body {
-	font-size: medium;
+  font-size: small;
 }
 
-h1 {
-	/* border: 1px solid red; */
-	/* 	text-align: center; */
-	
+body > header {
+  min-height: 60px;
 }
-
-.img-thumbnail {
-	max-width: 100px;
-	max-height: 100px;
+    
+.container > h1 {
+  height: 40px;
+  /* border: 1px solid red; */
+  /* text-align: center; */
 }
 
 div.bit-list {
-	min-height: 200px;
+  min-height: 200px;
 }
 
 div.container {
-	width: 800px;
+  width: 800px;
+}
+
+.bit-invisible {
+  display: none;
 }
 
 #bit-login-state {
-	margin: 0px 10px;
+  margin: 0px 10px;
 }
+

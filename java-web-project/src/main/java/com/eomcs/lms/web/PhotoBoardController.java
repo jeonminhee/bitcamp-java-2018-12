@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
@@ -92,7 +93,7 @@ public class PhotoBoardController {
   }
   
   @GetMapping("search")
-  public void search(int lessonNo, String keyword, Model model) {
+  public void search(@RequestParam(defaultValue = "0") int lessonNo, String keyword, Model model) {
     String searchWord = null;
     if (keyword.length() > 0)
       searchWord = keyword;
