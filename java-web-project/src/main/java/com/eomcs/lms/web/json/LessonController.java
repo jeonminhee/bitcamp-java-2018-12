@@ -19,7 +19,7 @@ public class LessonController {
   @Autowired LessonService lessonService;
 
   @PostMapping("add")
-  public Object add(Lesson lesson) throws Exception {
+  public Object add(Lesson lesson) {
 
     HashMap<String,Object> content = new HashMap<>();
     try {

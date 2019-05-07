@@ -30,19 +30,20 @@ document.querySelector('#add-btn').onclick = () => {
     
   };
   xhr.open('POST', '../../app/json/member/add', true);
-  xhr.setRequestHeader("Content-Type", "multipart/form-data")
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencodeda")
   
   var name = document.querySelector('#name').value,
       email = document.querySelector('#email').value,
       password = document.querySelector('#password').value,
-      photo = document.querySelector('#photoFile').value,
+      photoFile = document.querySelector('#photoFile').value,
       tel = document.querySelector('#tel').value;
       
   xhr.send(
       "name=" + encodeURIComponent(name) + 
-      "email=" + email + 
-      "password=" + password + 
-      "tel=" + tel);
+      "&email=" + email + 
+      "&password=" + password + 
+      "&photoFile=" + photoFile +
+      "&tel=" + tel);
 };
 
 document.querySelector('#delete-btn').onclick = () => {
@@ -61,7 +62,7 @@ document.querySelector('#delete-btn').onclick = () => {
   };
   
   var no = document.querySelector('#no').value;
-  xhr.open('GET', '../../app/json/lesson/delete?no=' + no, true);
+  xhr.open('GET', '../../app/json/member/delete?no=' + no, true);
   xhr.send();
 };
 
@@ -80,7 +81,7 @@ document.querySelector('#update-btn').onclick = () => {
     }
     
   };
-  xhr.open('POST', '../../app/json/lesson/update', true);
+  xhr.open('POST', '../../app/json/member/update', true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
   
   var no = document.querySelector('#no').value;

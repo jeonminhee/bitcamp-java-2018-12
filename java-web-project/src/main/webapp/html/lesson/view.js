@@ -40,12 +40,12 @@ document.querySelector('#add-btn').onclick = () => {
       dayHours = document.querySelector('#dayHours').value;
       
   xhr.send(
-      "title=" + encodeURIComponent(title) + 
-      "contents=" + encodeURIComponent(contents) + 
-      "startDate=" + startDate + 
-      "endDate=" + endDate + 
-      "totalHours=" + totalHours + 
-      "dayHours=" + dayHours);
+      "title=" + encodeURI(title) + 
+      "&contents=" + encodeURI(contents) + 
+      "&startDate=" + startDate + 
+      "&endDate=" + endDate + 
+      "&totalHours=" + totalHours + 
+      "&dayHours=" + dayHours);
 };
 
 document.querySelector('#delete-btn').onclick = () => {
