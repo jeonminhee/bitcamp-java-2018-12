@@ -35,6 +35,7 @@ var Bitcamp = function(arg1) { // 함수 객체가 된다. function = object + �
     for(var e of this) {
       var cn = value;
       var names = e.className.split(' ');
+      
       for(var name of names) {
         cn = cn + ' ' + name;
       }

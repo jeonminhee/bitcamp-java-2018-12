@@ -164,6 +164,23 @@
     <url-pattern>/lib/hello</url-pattern>
   </servlet-mapping>
   
+  <!-- /webapp/fileupload/*.html 예제에서 사용 할 파일 업로드를 처리하는 JSP  -->
+  <servlet>
+    <!-- 이름은 아무거나 설정해도 된다. -->
+    <servlet-name>upload.jsp</servlet-name>
+    <jsp-file>/fileupload/upload.jsp</jsp-file>
+    <multipart-config>
+      <max-file-size>100000000</max-file-size>
+    </multipart-config>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>upload.jsp</servlet-name>
+    <!-- url 패턴이름을 일관성을 위해 똑같이 선언하였다. /ok 으로 설정해도 무관하다. -->
+    <url-pattern>/fileupload/upload.jsp</url-pattern>
+  </servlet-mapping>
+  
+  
   <session-config>
     <session-timeout>1</session-timeout>
   </session-config>
